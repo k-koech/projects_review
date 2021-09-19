@@ -68,6 +68,7 @@ class Projects(models.Model):
     image = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     description = models.TextField()
     link = models.CharField(max_length =30)
+    date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     design=models.IntegerField()
     usability=models.IntegerField()
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
