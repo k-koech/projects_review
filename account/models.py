@@ -64,9 +64,10 @@ class Users(AbstractBaseUser):
 
 
 class Projects(models.Model):
-    first_name = models.CharField(max_length =30)
+    title = models.CharField(max_length =50)
+    image = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
+    description = models.TextField()
+    link = models.CharField(max_length =30)
     design=models.IntegerField()
-    Usability=models.IntegerField()
-    Content=models.IntegerField()
+    usability=models.IntegerField()
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
-    email = models.EmailField()
