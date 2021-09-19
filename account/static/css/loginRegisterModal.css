@@ -1,0 +1,17 @@
+body{
+    background-color: red ;
+}
+a:hover
+{
+  cursor: pointer !important;
+}
+
+.register
+{
+    display: none ;
+}
+
+.forgot_password
+{
+    display: none ;
+}
