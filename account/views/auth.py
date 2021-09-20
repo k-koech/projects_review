@@ -1,68 +1,71 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
-from ..models import Users
-from django.contrib.auth import authenticate,login,logout
+from ..models import Projects, Users
+from django.contrib.auth import authenticate,login,logout,login
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    projects=Projects.objects.all()
+    context={"projects":projects}
+    return render(request,'index.html', context)
 
 """ USER REGISTRATION VIEW """  
 def register(request):   
     if request.method=="POST":
-        username=request.POST['username']
-        email=request.POST['email']
-        password=request.POST['password']
-        confirm_password=request.POST['confirm_password']
+        username=request.POST.get('username')
+        email=request.POST.get('email')
+        phone=request.POST.get('phone')
+        password=request.POST.get('password')
+        confirm_password=request.POST.get('confirm_password')
 
         username_exist=Users.objects.filter(username=username).count()
         email_exist=Users.objects.filter(email=email).count()
         if username_exist<1:
             if email_exist<1:
                 if password==confirm_password:
-                    user = Users(username=username, email=email,followers=[],following=[], password=make_password(password))
+                    user = Users(username=username, email=email,phone_number=phone, password=make_password(password))
                     user.save()
 
                     user = Users.objects.get(username=username)
+                    return JsonResponse({"msg":"Registered successfully", "success":"success"})
                    
-
-                    messages.add_message(request, messages.SUCCESS, 'Successfully Registered!')
-                    return redirect(signIn)
                 else:
-                    messages.add_message(request, messages.ERROR, "Password doesn't match ")
-                    return redirect(register)
+                    return JsonResponse({"msg":"Password doesn't match", "error":"password_match" })
+                
             else:
-                    messages.add_message(request, messages.ERROR, "Email exist!")
-                    return redirect(register)
+                    return JsonResponse({"msg":"Email exist", "error":"email"})
+                
         else:
-                messages.add_message(request, messages.ERROR, "Username exist!! ")
-                return redirect(register)
+                return JsonResponse({"msg":"Username exist.", "error":"username"})
+              
     else:
-        return render(request, "register.html")
+        pass
 
 """ LOGIN VIEW """
 def signIn(request):
      if request.method=="POST":
-        email=request.POST['email']
-        password=request.POST['password']
+        email=request.POST.get('email')
+        password=request.POST.get('password')
         user= authenticate(email=email, password=password)
 
         if user is not None:
             login(request,user )
-            messages.add_message(request, messages.INFO, 'Successfully logged in!')
-            return redirect(index)
+            return JsonResponse({"msg":"Login succcess", "success":"success"})
+            # messages.add_message(request, messages.INFO, 'Successfully logged in!')
+            # return redirect(index)
  
         else:
-            messages.add_message(request, messages.ERROR, 'Invalid Credentials')
-            return redirect(signIn)
+            return JsonResponse({"msg":"Invalid Credentials", "error":"credentials"})
 
      else:
-        return render(request, "index.html")
+        pass
 
 """ LOGOUT VIEW """
 def signOut(request):
     logout(request)
-    messages.add_message(request, messages.SUCCESS, 'Logout successfully!')
-    return redirect(signIn)
+    # messages.add_message(request, messages.SUCCESS, 'Logout successfully!')
+    return redirect(index)

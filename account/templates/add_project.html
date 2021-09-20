@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/add_project.css' %}" >
+{% endblock %}
+
+  <main id="main ">
+    <!-- ======= form Section ======= -->
+    <section id="features" class="features mt-5">
+      <div class="container mt-2">
+
+        <div class="section-title">
+          <h2>New project</h2>
+          <p>Give your best shot</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3">
+            <ul class="nav nav-tabs flex-column">
+              <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab2" >Upgrade your account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-22">Add your project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-32">Get reviews</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-42">Get amazing priviledges</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-52">Join our team</a>
+              </li>
+            </ul>
+          </div>
+          <!-- add project form -->
+          <div class="col-lg-9 mt-4 mt-lg-0">
+            <div class="tab-content">
+              <div class="tab-pane active show" id="tab-1">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3>Add project</h3>
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                          {% if message.tags == "error" %}
+                            <div  class="alert alert-danger">{{ message }}</div>
+                          {% else %}
+                            <div  class="alert alert-{{ message.tags }}">{{ message }}</div>
+                          {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <form method="POST" action="add_project" enctype="multipart/form-data" >
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" required id="" >
+                      </div>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" name="description" class="form-control" required id="" >
+                      </div>
+                      <div class="form-group">
+                        <label>Link</label>
+                        <input type="link" name="link" class="form-control" required id="" >
+                      </div>
+                                          
+                      <div id="wrapper" style="margin-top: 20px;">
+                        <input id="fileUpload" name="image" required type="file"/> 
+                        <div id="image-holder" ></div>
+                      </div>
+                        
+                      <button type="submit" class="btn btn-outline-success mt-2 px-5 float-right rounded-0">Submit</button>
+                    </form>
+                  </div>
+
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    <img src="{% static 'img/features-1.png' %}" alt="" class="img-fluid">
+                  </div>
+
+                </div>
+              </div>
+
+            
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+    
+    <script src="{% static 'js/add_project.js' %}"></script>
+{% endblock %}
+
+

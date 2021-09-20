@@ -172,3 +172,8 @@
   });
 
 })(jQuery);
+
+// make alert messages dissapear after sometime
+setTimeout(function() {
+  $('.messages').fadeOut('fast');
+  }, 5000); 

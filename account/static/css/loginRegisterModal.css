@@ -1,6 +1,4 @@
-body{
-    background-color: red ;
-}
+
 a:hover
 {
   cursor: pointer !important;
@@ -14,4 +12,10 @@ a:hover
 .forgot_password
 {
     display: none ;
+}
+
+/* error alerts */
+#error, #success
+{
+    display: none;
 }

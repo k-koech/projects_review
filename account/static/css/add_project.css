@@ -1,0 +1,14 @@
+#image-holder
+{
+    margin-top: 1em;
+    height: 8em !important;
+    width: auto;
+    overflow: hidden;
+    display: none;
+  
+}
+#image-holder img
+{
+    height: 100% !important;
+    width: auto;
+}

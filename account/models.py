@@ -3,6 +3,7 @@ import datetime as dt
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from cloudinary.models import CloudinaryField
 
+
 # Create your models here.
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -69,6 +70,7 @@ class Projects(models.Model):
     description = models.TextField()
     link = models.CharField(max_length =30)
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
-    design=models.IntegerField()
-    usability=models.IntegerField()
+    design=models.FloatField(default=0)
+    usability=models.FloatField(default=0)
+    content=models.FloatField(default=0)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
