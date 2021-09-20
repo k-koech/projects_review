@@ -29,7 +29,7 @@ def add_project(request):
 """ PROFILE VIEW """
 def profile(request):
      if request.method=="POST":
-        user = Users.objects.get(id=request.id)
+        user = Users.objects.get(id=request.user.id)
 
         email=request.POST['email']
         username=request.POST['username']
@@ -40,9 +40,9 @@ def profile(request):
         user.bio=bio
         user.username=username
         user.phone_number=phone_number
-
         user.save()
-        messages.add_message("request", messages.SUCCESS, "Profile saved successfully")
+
+        messages.add_message(request, messages.SUCCESS, "Profile saved successfully")
         return redirect(profile)
 
      else:
