@@ -42,7 +42,8 @@ def profile(request):
         user.phone_number=phone_number
 
         user.save()
-        return redirect()
+        messages.add_message("request", messages.SUCCESS, "Profile saved successfully")
+        return redirect(profile)
 
      else:
         return render(request, "profile.html")
