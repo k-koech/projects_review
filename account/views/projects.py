@@ -29,18 +29,20 @@ def add_project(request):
 """ PROFILE VIEW """
 def profile(request):
      if request.method=="POST":
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        user= authenticate(email=email, password=password)
+        user = Users.objects.get(id=request.id)
 
-        if user is not None:
-            login(request,user )
-            return JsonResponse({"msg":"Login succcess", "success":"success"})
-            # messages.add_message(request, messages.INFO, 'Successfully logged in!')
-            # return redirect(index)
- 
-        else:
-            return JsonResponse({"msg":"Invalid Credentials", "error":"credentials"})
+        email=request.POST['email']
+        username=request.POST['username']
+        bio=request.POST['bio']
+        phone_number=request.POST['phone_number']
+      
+        user.email=email
+        user.bio=bio
+        user.username=username
+        user.phone_number=phone_number
+
+        user.save()
+        return redirect()
 
      else:
         return render(request, "profile.html")
