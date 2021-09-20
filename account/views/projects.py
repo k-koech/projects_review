@@ -6,8 +6,25 @@ from django.contrib.auth import authenticate,login,logout,login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from ..serializer import MerchSerializer, MerchUser
 
 # Create your views here.
+class MerchList(APIView):
+    def get(self, request, format=None):
+        projects = Projects.objects.all()
+        serializers = MerchSerializer(projects, many=True)
+        return Response(serializers.data)
+
+class MerchUsers(APIView):  
+    def get(self, request, format=None):
+        users = Users.objects.all()
+        serializers = MerchUser(users, many=True)
+        return Response(serializers.data)
+# ..........................................................
+
+
 """ ADD PROJECT VIEW """  
 def add_project(request):   
     if request.method=="POST":
@@ -53,7 +70,6 @@ def profile_photo(request):
     if request.method=="POST":
         user=Users.objects.get(id=request.user.id)
         profile_img=request.FILES.get('file') 
-
 
         print(profile_img)
         user.profile_photo=profile_img
