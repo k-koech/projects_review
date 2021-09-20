@@ -48,4 +48,17 @@ def profile(request):
      else:
         return render(request, "profile.html")
 
+""" UPDATE PROFILE PHOTO VIEW """  
+def profile_photo(request):   
+    if request.method=="POST":
+        user=Users.objects.get(id=request.user.id)
+        profile_img="request.FILES.get('file') "
 
+
+        print(profile_img)
+        user.profile_photo=profile_img
+        user.save()      
+        return JsonResponse({"msg":"Saved successfully", "success":"success"})
+              
+    else:
+        pass

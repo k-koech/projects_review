@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from .views.auth import index, register,signIn, signOut
-from .views.projects import add_project,profile
+from .views.projects import add_project,profile, profile_photo
 
 urlpatterns = [
     path('', index, name='index'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('signOut', signOut, name='signOut'),
 
     path('profile', profile, name='profile'),
+    path('profile_photo', profile_photo, name='profile_photo'),
     path('add_project', add_project, name='add_project'),
 ]
