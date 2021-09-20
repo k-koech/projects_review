@@ -52,7 +52,7 @@ def profile(request):
 def profile_photo(request):   
     if request.method=="POST":
         user=Users.objects.get(id=request.user.id)
-        profile_img="request.FILES.get('file') "
+        profile_img=request.FILES.get('file') 
 
 
         print(profile_img)

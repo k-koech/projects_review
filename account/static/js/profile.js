@@ -1,5 +1,6 @@
 
 //   ==========REGISTER==============
+
 $(document).ready(function()
 {
     console.log("kkkk")
