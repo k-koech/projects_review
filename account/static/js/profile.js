@@ -13,6 +13,7 @@ $(document).ready(function()
         data.append("file",f_obj);
         data.append("csrfmiddlewaretoken",$('input[name=csrfmiddlewaretoken]').val());
 // "csrfmiddlewaretoken", "{{ csrf_token }}"
+
         console.log(data);
 
     e.preventDefault();
