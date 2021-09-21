@@ -25,7 +25,7 @@
   
     
 ## Live link
-Deployed project can be accessed here [instaclone](https://django-instaclone.herokuapp.com/)   
+Deployed project can be accessed here [projects_review](https://jango-projects_reviewherokuapp.com/)   
 
 ## Known Bugs
     The application works perfectly well, no bugs.
@@ -33,6 +33,8 @@ Deployed project can be accessed here [instaclone](https://django-instaclone.her
 ## Technologies used
     - HTML
     - CSS
+    - Javasript
+    - Ajax
     - Fontawesome
     - Bootstrap
     - Python
@@ -42,5 +44,5 @@ Deployed project can be accessed here [instaclone](https://django-instaclone.her
     - phone :: +254725801772
 
 ### License
-*Licenced under the [MT-licence](https://github.com/k-koech/instaclone-django/blob/master/LICENSE.md)*
+*Licenced under the [MT-licence](https://github.com/k-koech/projects_review/blob/master/LICENSE.md)*
 Copyright (c) 2021 **Kelvin Kipchumba
