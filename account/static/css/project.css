@@ -20,7 +20,7 @@
   }
   .project .entry .entry-img img
   {
-      width: 80%;
+      width: 100%;
       height: auto;
   }
   
@@ -210,17 +210,17 @@
     line-height: 38px;
   }
   
-  .project .project-author {
+  .project .project-votes {
     padding: 20px;
     margin-bottom: 30px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
   
-  .project .project-author img {
+  .project .project-votes img {
     width: 120px;
   }
   
-  .project .project-author h4 {
+  .project .project-votes h4 {
     margin-left: 140px;
     font-weight: 600;
     font-size: 22px;
@@ -228,18 +228,11 @@
     padding: 0;
   }
   
-  .project .project-author .social-links {
-    margin: 0 0 5px 140px;
-  }
+
   
-  .project .project-author .social-links a {
-    color: #c1c8d0;
-  }
-  
-  .project .project-author p {
+  .project .project-votes p {
     margin-left: 140px;
-    font-style: italic;
-    color: #b7b7b7;
+    
   }
   
   .project .project-comments {
