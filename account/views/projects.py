@@ -77,8 +77,9 @@ def add_project(request):
     else:
         return render(request, "add_project.html")
          
-def project(request):
-    return render(request, 'projects.html')
+def project(request, id):
+    project = Projects.objects.get(id=id)
+    return render(request, 'project.html', {"project":project})
 
 """ PROFILE VIEW """
 def profile(request):
