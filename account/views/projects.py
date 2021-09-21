@@ -77,6 +77,8 @@ def add_project(request):
     else:
         return render(request, "add_project.html")
          
+def project(request):
+    return render(request, 'projects.html')
 
 """ PROFILE VIEW """
 def profile(request):
