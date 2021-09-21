@@ -1,14 +1,23 @@
 from django.contrib.messages.api import add_message
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
+from rest_framework import authentication
+import rest_framework
+from rest_framework import permissions
 from ..models import Projects, Users
-from django.contrib.auth import authenticate,login,logout,login
+from django.contrib.auth import authenticate,login as django_login,logout as django_logout,login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializer import MerchSerializer, MerchUser
+from ..serializer import LoginSerializer, MerchSerializer, MerchUser
+from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView
+from rest_framework.authtoken.models import Token
+
 
 # Create your views here.
 class MerchList(APIView):
@@ -17,11 +26,37 @@ class MerchList(APIView):
         serializers = MerchSerializer(projects, many=True)
         return Response(serializers.data)
 
+    def post(self, request, format=None):
+        serializers = MerchSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class MerchUsers(APIView):  
     def get(self, request, format=None):
         users = Users.objects.all()
         serializers = MerchUser(users, many=True)
         return Response(serializers.data)
+    
+class LoginView(GenericAPIView):
+    serializer_class = LoginSerializer
+    
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        django_login(request, user)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({"token": token.key}, status=200)
+
+
+class LogoutView(APIView):
+    authentication_classes = (TokenAuthentication, )
+
+    def post(self, request):
+        django_logout(request)
+        return Response(status=204)
 # ..........................................................
 
 
