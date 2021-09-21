@@ -25,7 +25,7 @@
   
     
 ## Live link
-Deployed project can be accessed here [projects_review](https://jango-projects_reviewherokuapp.com/)   
+Deployed project can be accessed here [projects_review](https://jango-projects_review.herokuapp.com/)   
 
 ## Known Bugs
     The application works perfectly well, no bugs.
