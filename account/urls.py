@@ -6,7 +6,7 @@ from .views.projects import add_project,profile, profile_photo,MerchList, MerchU
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path(' ', index, name='index'),
+    path('', index, name='index'),
     path('register', register, name='register'),
     path('login', signIn, name='login'),
     path('signOut', signOut, name='signOut'),

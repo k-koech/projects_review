@@ -695,6 +695,8 @@ section {
 
 .portfolio .portfolio-wrap {
   transition: 0.3s;
+  height: 40vh;
+  
   position: relative;
   overflow: hidden;
   z-index: 1;
