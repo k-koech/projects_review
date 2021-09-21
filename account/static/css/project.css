@@ -14,9 +14,14 @@
   }
   
   .project .entry .entry-img {
-    max-height: 400px;
+    /* max-height: 400px; */
     margin: -20px -20px 20px -20px;
     overflow: hidden;
+  }
+  .project .entry .entry-img img
+  {
+      width: 80%;
+      height: auto;
   }
   
   .project .entry .entry-title {
