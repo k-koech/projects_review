@@ -1,8 +1,8 @@
 # PROJECT REVIEW APPLICATION 
-#### The app is a project review, 15/09/2021
+#### The app is a project review, 21/09/2021
 #### **By Kelvin Kipchumba**
 ## Project Description
-    Its a clone of the website for the popular photo app Instagram users can share their photos.
+    The application will allow a user to post a project he/she has created and get it reviewed by his/her peers.
 ## Setup/Installation Requirements
     - Download a file in the code section to the desired folder
     - Extract the files
@@ -23,7 +23,6 @@
     - View projects overall score
     - View my profile page
   
-    
 ## Live link
 Deployed project can be accessed here [projects_review](https://jango-projects_review.herokuapp.com/)   
 
