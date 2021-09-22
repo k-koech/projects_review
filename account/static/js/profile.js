@@ -121,3 +121,5 @@ $(document).ready(function()
 // });
 
 // API
+document.getElementById("usersApi").innerHTML=document.location.hostname+"/api/users/";
+document.getElementById("projectsApi").innerHTML=document.location.hostname+"/api/projects/";
