@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}" >
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">-->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"> 
-  <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css"> -->
+  <!-- <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css"> --> 
 {% endblock %}
 
 
@@ -28,6 +28,7 @@
                         <div class="name">
                             <h3 class="title">{{user.username}}</h3>
               <h6>Fullstack Developer</h6>
+              <h6 class="font-weight-bold change-profile" data-toggle="modal" data-target="#addProfile">Update Profile Picture</h6>
               <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
                               <a href="#" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
                               <a href="#" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
@@ -139,6 +140,26 @@
       
           </div>
       </div>
+
+      <!-- Modal -->
+<div class="modal fade" id="addProfile" tabindex="-1" aria-labelledby="addProfileLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+            <div id="error" class="alert alert-danger "></div>
+            <div id="success" class="alert alert-success"></div>
+            <form id="profilePhotoForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                <input type="file" id="profile_photo" required class="rounded-0">
+                </div>
+                <button type="submit" id="updateProfileImgBtn" class="btn btn-danger float-both pt-3 pb-3 w-100 rounded-0">Save</button>
+            </form>          
+      </div>
+     
+    </div>
+  </div>
+</div>
 </body>
 
 <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
