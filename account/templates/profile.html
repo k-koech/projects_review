@@ -5,165 +5,145 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}" >
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"> 
+  <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css"> -->
 {% endblock %}
 
-<main id="main">
-  <!-- ======= Profile ======= -->
-  <section id="about" class="about mt-3">
-    <div class="container mt-4">
 
-      <div class="row content">
-        <div class="col-lg-5 mx-4 mt-3 text-center card  pt-5">
-          <h2>Profile</h2>
-          <label class="">
-            <img src="{{ user.profile_photo.url }}" class="mb-2" style="width: 7em; height: 7em; border-radius: 50%;"/>
-          </label>
-          <div class="pt-2 text-center">
-            <h6 class="font-weight-bold change-profile" data-toggle="modal" data-target="#addProfile">Update Profile Picture</h6>
-            <p class="mb-0 font-weight-bold h5">{{ user.username }}</p>
-            <h5 class="font-weight-bold m-2 text-muted">Bio</h5>  
-            <p>{{ user.bio }}</p>
-          </div>
-
-        </div>
-        <div class="col-lg-5 pt-4  mx-4 mt-3 pt-lg-0 pb-3 card ">
-          <h4 class="text-center font-weight-bold m-2 pt-5 ">Update profile</h4>
-          {% for message in messages %}
-            {% if message.tags == "error" %}
-              <div  class="alert alert-danger">{{ message }}</div>
-            {% else %}
-              <div  class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endif %}
-          {% endfor %}
-          <form method="POST" action="">
-            {% csrf_token %}
-            <div class="form-group">
-              <label class="label">Username</label>
-              <input required type="text" readonly name="username" class="form-control" value="{{ user.username }}">
-            </div>
-
-            <div class="form-group">
-              <label class="label">Bio</label>
-              <input type="textarea" name="bio" class="form-control" value="{{ user.bio }}">
-            </div>
-
-            <div class="form-group">
-              <label class="label">Email</label>
-              <input required type="text" name="email" class="form-control" value="{{ user.email }}">
-            </div>
-
-            <div class="form-group">
-              <label class="label">Phone number</label>
-              <input required type="text" name="phone_number" class="form-control" value="{{ user.phone_number }}">
-            </div>         
-           
-            <div class="form-group">
-              <label class="label"></label>
-                  <button type="submit" class="btn btn-outline-success px-5 rounded-0 float-right">Save</button>
+<body class="profile-page">
+  
+  <div class="page-header header-filter" data-parallax="true" style="background-image:url('static/img/cover.jpg');"></div>
+  <div class="main main-raised">
+  <div class="profile-content">
+          <div class="container">
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                   <div class="profile">
+                        <div class="avatar">
+                            <img src="{{user.profile_photo.url}}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                        </div>
+                        <div class="name">
+                            <h3 class="title">{{user.username}}</h3>
+              <h6>Fullstack Developer</h6>
+              <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
+                              <a href="#" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
+                              <a href="#" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
               </div>
-            </div>
-          </form>
+              <div class="description text-center">
+                  <p>{{user.bio}}</p>
+              </div>
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+                      <div class="profile-tabs">
+                        <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                          <li class="nav-item">
+                              <a class="nav-link active profileBtn" href="#updateProfile" role="tab" data-toggle="tab">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                Update profile
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link apiBtn" href="#api" role="tab" data-toggle="tab">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                  API
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link projectsBtn" href="#myProjects" role="tab" data-toggle="tab">
+                                <i class="fa fa-link" aria-hidden="true"></i>
+                                  Projects
+                              </a>
+                          </li>
+                        </ul>
+                      </div>
+          </div>
+          </div>
+      
+        <div class="tab-content tab-space">
+          <div class="tab-pane active gallery" id="updateProfile">
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <h4 class="text-center font-weight-bold m-2 pt-5 ">Update profile</h4>
+            {% for message in messages %}
+              {% if message.tags == "error" %}
+                <div  class="alert alert-danger">{{ message }}</div>
+              {% else %}
+                <div  class="alert alert-{{ message.tags }}">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+            <form method="POST" action="">
+              {% csrf_token %}
+              <div class="form-group">
+                <label class="label">Username</label>
+                <input required type="text" readonly name="username" class="form-control" value="{{ user.username }}">
+              </div>
+  
+              <div class="form-group">
+                <label class="label">Bio</label>
+                <input type="textarea" name="bio" class="form-control" value="{{ user.bio }}">
+              </div>
+  
+              <div class="form-group">
+                <label class="label">Email</label>
+                <input required type="text" name="email" class="form-control" value="{{ user.email }}">
+              </div>
+  
+              <div class="form-group">
+                <label class="label">Phone number</label>
+                <input required type="text" name="phone_number" class="form-control" value="{{ user.phone_number }}">
+              </div>         
+             
+              <div class="form-group">
+                <label class="label"></label>
+                    <button type="submit" class="btn btn-success px-5 rounded-0 float-right">Save</button>
+                </div>
+              </div>
+            </form>
+          </div>
           
         </div>
       </div>
 
-    </div>
-  </section><!-- End About Section -->
-
-  <!-- ======= Api Section ======= -->
-  <section id="team api" class="team section-bg">
-    <div class="container">
-
-      <div class="section-title">
-        <h2>API</h2>
-        <p>Our API</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-lg-6">
-          <div class="member d-flex align-items-start">
-            <div class="pic"><img src="assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
-            <div class="member-info">
-              <h4>Generate new token</h4>
-              <span class="h4 btn btn-secondary">gvyizidvsdvxzcxsdvevs</span>  
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6 mt-4 mt-lg-0 rounded-3 p-4">
-          <div class="member d-flex align-items-start">
-            <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
-            <div class="member-info">
+        <div class="tab-pane gallery" id="api">
+          <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
               <h4>API Endpoints</h4>
-              <span>Product Manager</span>
-              <p>API Key</p><span>hjgrfrywesofusb</span>
-             
+              <p>API Key</p><span class="btn btn-outline-secondary">hjgrfrywesofusb</span>
+           Test
+            https://imdb-api.com/en/API/BoxOffice/k_b2966e6j </div>
+            
+          </div>
+      </div>
+
+      <div class="tab-pane text-center gallery" id="myProjects">
+          <div class="row">
+            <div class="col-md-3 ml-auto">
+              <img src="https://images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80" class="rounded">
+                    <img src="https://images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80" class="rounded">
             </div>
+            <div class="col-md-3 mr-auto">
+              <img src="https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">  					
+              <img src="https://images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
+            <img src="https://images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
+              </div>
           </div>
         </div>
+        </div>
 
-        <!-- <div class="col-lg-6 mt-4">
-          <div class="member d-flex align-items-start">
-            <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
-            <div class="member-info">
-              <h4>William Anderson</h4>
-              <span>CTO</span>
-              <p>Quisquam facilis cum velit laborum corrupti</p>
-              <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-              </div>
-            </div>
+      
           </div>
-        </div> -->
-
-        <!-- <div class="col-lg-6 mt-4">
-          <div class="member d-flex align-items-start">
-            <div class="pic"><img src="assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
-            <div class="member-info">
-              <h4>Amanda Jepson</h4>
-              <span>Accountant</span>
-              <p>Dolorum tempora officiis odit laborum officiis</p>
-              <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
       </div>
+</body>
 
-    </div>
-  </section><!-- End Team Section -->
-</main><!-- End #main -->
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="addProfile" tabindex="-1" aria-labelledby="addProfileLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body p-5">
-            <div id="error" class="alert alert-danger "></div>
-            <div id="success" class="alert alert-success"></div>
-            <form id="profilePhotoForm" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                <input type="file" id="profile_photo" required class="rounded-0">
-                </div>
-                <button type="submit" id="updateProfileImgBtn" class="btn btn-danger float-both pt-3 pb-3 w-100 rounded-0">Save</button>
-            </form>          
-      </div>
-     
-    </div>
-  </div>
-</div>
-
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
 <script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

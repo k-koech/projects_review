@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" >
+{% endblock %}
+
+<main id="main">
+  <!-- ======= Profile ======= -->
+  <section id="about" class="about mt-3">
+    <div class="container mt-4">
+
+      <div class="row content">
+        <div class="col-lg-5 mx-4 mt-3 text-center card  pt-5">
+          <h2>Profile</h2>
+          <label class="">
+            <img src="{{ user.profile_photo.url }}" class="mb-2" style="width: 7em; height: 7em; border-radius: 50%;"/>
+          </label>
+          <div class="pt-2 text-center">
+            <h6 class="font-weight-bold change-profile" data-toggle="modal" data-target="#addProfile">Update Profile Picture</h6>
+            <p class="mb-0 font-weight-bold h5">{{ user.username }}</p>
+            <h5 class="font-weight-bold m-2 text-muted">Bio</h5>  
+            <p>{{ user.bio }}</p>
+          </div>
+
+        </div>
+        <div class="col-lg-5 pt-4  mx-4 mt-3 pt-lg-0 pb-3 card ">
+          <h4 class="text-center font-weight-bold m-2 pt-5 ">Update profile</h4>
+          {% for message in messages %}
+            {% if message.tags == "error" %}
+              <div  class="alert alert-danger">{{ message }}</div>
+            {% else %}
+              <div  class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+          <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+              <label class="label">Username</label>
+              <input required type="text" readonly name="username" class="form-control" value="{{ user.username }}">
+            </div>
+
+            <div class="form-group">
+              <label class="label">Bio</label>
+              <input type="textarea" name="bio" class="form-control" value="{{ user.bio }}">
+            </div>
+
+            <div class="form-group">
+              <label class="label">Email</label>
+              <input required type="text" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+
+            <div class="form-group">
+              <label class="label">Phone number</label>
+              <input required type="text" name="phone_number" class="form-control" value="{{ user.phone_number }}">
+            </div>         
+           
+            <div class="form-group">
+              <label class="label"></label>
+                  <button type="submit" class="btn btn-outline-success px-5 rounded-0 float-right">Save</button>
+              </div>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End About Section -->
+
+  <!-- ======= Api Section ======= -->
+  <section id="team api" class="team section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>API</h2>
+        <p>Our API</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="member d-flex align-items-start">
+            <div class="pic"><img src="assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Generate new token</h4>
+              <span class="h4 btn btn-secondary">gvyizidvsdvxzcxsdvevs</span>  
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4 mt-lg-0 rounded-3 p-4">
+          <div class="member d-flex align-items-start">
+            <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>API Endpoints</h4>
+              <span>Product Manager</span>
+              <p>API Key</p><span>hjgrfrywesofusb</span>
+             
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-lg-6 mt-4">
+          <div class="member d-flex align-items-start">
+            <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>William Anderson</h4>
+              <span>CTO</span>
+              <p>Quisquam facilis cum velit laborum corrupti</p>
+              <div class="social">
+                <a href=""><i class="ri-twitter-fill"></i></a>
+                <a href=""><i class="ri-facebook-fill"></i></a>
+                <a href=""><i class="ri-instagram-fill"></i></a>
+                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-lg-6 mt-4">
+          <div class="member d-flex align-items-start">
+            <div class="pic"><img src="assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Amanda Jepson</h4>
+              <span>Accountant</span>
+              <p>Dolorum tempora officiis odit laborum officiis</p>
+              <div class="social">
+                <a href=""><i class="ri-twitter-fill"></i></a>
+                <a href=""><i class="ri-facebook-fill"></i></a>
+                <a href=""><i class="ri-instagram-fill"></i></a>
+                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+
+    </div>
+  </section><!-- End Team Section -->
+</main><!-- End #main -->
+
+<!-- Modal -->
+<div class="modal fade" id="addProfile" tabindex="-1" aria-labelledby="addProfileLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+            <div id="error" class="alert alert-danger "></div>
+            <div id="success" class="alert alert-success"></div>
+            <form id="profilePhotoForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                <input type="file" id="profile_photo" required class="rounded-0">
+                </div>
+                <button type="submit" id="updateProfileImgBtn" class="btn btn-danger float-both pt-3 pb-3 w-100 rounded-0">Save</button>
+            </form>          
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

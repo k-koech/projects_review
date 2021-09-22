@@ -1,3 +1,28 @@
+$(document).ready(function(){
+    $(".profileBtn").click(function(){
+        $( "#updateProfile").fadeIn( "fast" );
+        $( "#api").fadeOut( "fast" );
+        $( "#myProjects").fadeOut( "fast" );
+        
+    });
+
+    $(".projectsBtn").click(function(){
+        $( "#updateProfile").fadeOut("fast");
+        $( "#api").fadeOut("fast");
+        $( "#myProjects").fadeIn( "fast" );
+    });
+
+    $(".apiBtn").click(function(){
+        $( "#updateProfile").fadeOut("fast");
+        $( "#api").fadeIn("fast");
+        $( "#myProjects").fadeOut( "fast" );
+    });
+
+
+});
+
+
+
 
 //   ==========REGISTER==============
 
