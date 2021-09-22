@@ -27,6 +27,11 @@
               <a href="project-single.html">{{project.title}}</a>
             </h2>
 
+            <form method="POST" action="/project/delete/{{project.id}}">
+              {%csrf_token%}
+               <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+             </form>
+
             <div class="entry-meta">
               <ul>
                 <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href=""></a>{{project.user.username}}</a></li>
@@ -193,8 +198,58 @@
             </div><!-- End sidebar search formn-->
 
             <h3 class="sidebar-title">Rate the project</h3>
-            <div class="sidebar-item categories">
-              
+            <div class="sidebar-item  mb-3 categories">
+              <form method="POST" action="/project/rate/{{project.id}}">
+                {%csrf_token%}
+                <div class="form-group">
+                  <label>Design</label>
+                  <select name="design" required class="form-control">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="4">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+
+                <label>Usability</label>
+                <select name="usability" required class="form-control">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="4">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+
+                <label>Content</label>
+                <select name="content" required class="form-control">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="4">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+
+                <button type="submit" class="btn btn-outline-success float-right rounded-0 mt-3">Rate</button>
+              </form>
 
             </div>
             <!-- End rate form categories-->

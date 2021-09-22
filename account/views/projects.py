@@ -1,8 +1,10 @@
+from account.views.auth import index
 from django.contrib.messages.api import add_message
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework import authentication
 import rest_framework
+from django.contrib.auth.decorators import login_required
 from rest_framework import permissions
 from ..models import Projects, Users
 from django.contrib.auth import authenticate,login as django_login,logout as django_logout,login
@@ -59,9 +61,9 @@ class LogoutView(APIView):
         return Response(status=204)
 # ..........................................................
 
-
-""" ADD PROJECT VIEW """  
+@login_required(login_url='/')
 def add_project(request):   
+    """ ADD PROJECT VIEW """  
     if request.method=="POST":
         title=request.POST['title']
         link=request.POST['link']
@@ -76,13 +78,32 @@ def add_project(request):
             
     else:
         return render(request, "add_project.html")
-         
+
+@login_required(login_url='/')   
+def rate_project(request,id):
+    if request.method=="POST":
+        project = Projects.objects.get(id=id)
+        project.design=request.POST['design']
+        project.usability=request.POST['usability']
+        project.content=request.POST['content']
+        project.save()
+    return redirect(index)
+
+@login_required(login_url='/')   
+def delete_project(request,id):
+    project=Projects.objects.get(id=id)
+    project.delete()
+    return redirect(index)
+
+@login_required(login_url='/')     
 def project(request, id):
     project = Projects.objects.get(id=id)
     return render(request, 'project.html', {"project":project})
 
-""" PROFILE VIEW """
+
+@login_required(login_url='/')
 def profile(request):
+     """ PROFILE VIEW """
      if request.method=="POST":
         user = Users.objects.get(id=request.user.id)
 
@@ -103,8 +124,10 @@ def profile(request):
      else:
         return render(request, "profile.html")
 
-""" UPDATE PROFILE PHOTO VIEW """  
-def profile_photo(request):   
+
+@login_required(login_url='/')
+def profile_photo(request):
+    """ UPDATE PROFILE PHOTO VIEW """     
     if request.method=="POST":
         user=Users.objects.get(id=request.user.id)
         profile_img=request.FILES.get('file') 
