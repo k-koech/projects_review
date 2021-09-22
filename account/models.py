@@ -76,6 +76,8 @@ class Users(AbstractBaseUser):
         user=cls.objects.get(id=id)
         user.profile_photo=profile_photo
         user.bio=bio
+        user.profile_photo=profile_photo
+        user.bio=bio
         user.phone_number=phone_number
         return user.save()
 
@@ -95,14 +97,15 @@ class Projects(models.Model):
         self.save()
     
     @classmethod
+    def update_project(cls,id,description,title,image):
+        get_project=cls.objects.get(id=id)
+        get_project.title=title
+        get_project.description=description
+        get_project.image=image
+        return get_project.save()
+    
+    @classmethod
     def delete_project(cls,id):
         delete_project = cls.objects.get(id=id)
         delete_project.delete()
         return delete_project
-    
-    @classmethod
-    def update_project(cls,id,description,bio):
-        get_project=cls.objects.get(id=id)
-        get_project.description=description
-        get_project.bio=bio
-        return get_project.save()

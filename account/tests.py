@@ -26,45 +26,48 @@ class ProjectsTestClass(TestCase):
 
     def test_update_user(self):
         user = Users.objects.first()
-        id=image_obj.id
-        caption="This is lit"        
-        Posts.update_caption(id,caption)
-        image = Posts.objects.get(id=id)
-        self.assertEqual(image.caption,"This is lit")
+        id=user.id
+        bio="Chelsea"  
+        profile_photo="abc.jpg"
+        phone_number="+254725801772"     
+        Users.update_user(id,profile_photo,bio, phone_number)
+        updated_user = Users.objects.get(id=id)
+        self.assertEqual(updated_user.bio,"Chelsea")
 
-    def test_delete_image(self):
-        image=Posts.objects.first()
-        id=image.id
-        Posts.delete_image(id)
+    def test_delete_user(self):
+        user=Users.objects.first()
+        id=user.id
+        Users.delete_user(id)
         try:
-            img = Posts.objects.get(id=id)
+            Users.objects.get(id=id)
             self.assertTrue("Some results")
-        except Posts.DoesNotExist:
+        except Users.DoesNotExist:
             self.assertTrue("no results"=="no results")
 
-    # TEST PROFILE
-    def test_save_profile(self):
-        profile=Profile(profile_photo = 'myphoto.jpg', bio ='Chelsea fan', user=3)
-        profile.save_profile()
-        profile_obj = Profile.objects.all().count()
-        self.assertTrue(profile_obj>1)
+    # TEST PROJECT
+    def test_save_project(self):
+        project=Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
+        project.save_project()
+        project_obj = Projects.objects.all().count()
+        self.assertTrue(project_obj>1)
 
 
-    def test_update_profile(self):
-        profile_obj = Profile.objects.first()
-        id=profile_obj.id
-        profile_image="myPhoto.png"
-        bio="always happy"        
-        Profile.update_profile(id,profile_image,bio)
-        profile = Profile.objects.get(id=id)
-        self.assertEqual(profile.bio,"always happy")
+    def test_update_project(self):
+        project_obj = Projects.objects.first()
+        id=project_obj.id
+        title="Portfolio"
+        description="Description of a my portfolio"
+        image="portfolio.jpg"     
+        Projects.update_project(id,description,title,image)
+        profile = Projects.objects.get(id=id)
+        self.assertEqual(profile.title,"Portfolio")
 
     def test_delete_profile(self):
-        profile=Profile.objects.first()
-        id=profile.id
-        Profile.delete_profile(id)
+        projects=Projects.objects.first()
+        id=projects.id
+        Projects.delete_project(id)
         try:
-            Profile.objects.get(id=id)
+            Projects.objects.get(id=id)
             self.assertTrue("Some results")
-        except Profile.DoesNotExist:
+        except Projects.DoesNotExist:
             self.assertTrue("no results"=="no results")
