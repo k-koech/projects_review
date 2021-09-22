@@ -1,18 +1,21 @@
 $(document).ready(function(){
-    $(".profileBtn").click(function(){
+    $(".profileBtn").click(function()
+    {
         $( "#updateProfile").fadeIn( "fast" );
         $( "#api").fadeOut( "fast" );
         $( "#myProjects").fadeOut( "fast" );
         
     });
 
-    $(".projectsBtn").click(function(){
+    $(".projectsBtn").click(function()
+    {
         $( "#updateProfile").fadeOut("fast");
         $( "#api").fadeOut("fast");
         $( "#myProjects").fadeIn( "fast" );
     });
 
-    $(".apiBtn").click(function(){
+    $(".apiBtn").click(function()
+    {
         $( "#updateProfile").fadeOut("fast");
         $( "#api").fadeIn("fast");
         $( "#myProjects").fadeOut( "fast" );
@@ -116,3 +119,5 @@ $(document).ready(function()
 
 // });
 // });
+
+// API

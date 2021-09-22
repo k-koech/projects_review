@@ -98,7 +98,13 @@ def delete_project(request,id):
 @login_required(login_url='/')     
 def project(request, id):
     project = Projects.objects.get(id=id)
-    return render(request, 'project.html', {"project":project})
+    usability=project.usability
+    design=project.design
+    content=project.content
+
+    average= round((usability+design+content)/3, 1)
+    context = {"project":project,"usability":usability,"design":design, "content":content, "average":average}
+    return render(request, 'project.html', context)
 
 
 @login_required(login_url='/')
