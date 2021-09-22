@@ -1,6 +1,9 @@
 from pathlib import Path
 import cloudinary
 import os
+import dj_database_url
+from decouple import config,Csv
+import django_on_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
@@ -10,8 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m8*-m=zd6a+kph1g=ky-#)0ys0ejz(ivy(_ou&y+pt7%b7!!09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = os.environ['DEBUG']
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS']
 # auth model
 AUTH_USER_MODEL="account.users"
 # Application definition
@@ -66,18 +69,26 @@ WSGI_APPLICATION = 'projects_review.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
+if os.environ.get('MODE')=="dev":
+    DATABASES = {
+        'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'projects_review',
         'USER': 'postgres',
-        'PASSWORD': 'kkkk',
+        'PASSWORD': os.environ.get('PASSWORD') ,
         'HOST': 'localhost',
         'DISABLE_SERVER_SIDE_CURSORS': True,
 
     }
-}
+    }
+
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=os.environ.get('DATABASE_URL')
+       )
+   }
 
 
 # Password validation
@@ -130,3 +141,6 @@ cloudinary.config(
   api_key = os.environ.get('CLOUDINARY_API_KEY'), 
   api_secret = os.environ.get('CLOUDINARY_API_SECRET'),   
 )
+
+# Configure Django App for Heroku.
+django_on_heroku.settings(locals())
