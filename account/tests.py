@@ -8,8 +8,8 @@ class ProjectsTestClass(TestCase):
         self.user.save()
 
         # Creating a new Project and saving it
-        self.new_post = Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_joined="2021-09-05 22:16", user=self.user)
-        self.new_pr.save()
+        self.new_project = Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
+        self.new_project.save()
 
 
     def tearDown(self):
@@ -19,13 +19,13 @@ class ProjectsTestClass(TestCase):
     
     # SAVING USERS
     def test_save_user(self):
-        self.user=Posts(post_image = 'xyz.jpg', caption ='It was a one tour to mombasa')
-        image_obj = Posts.objects.all().count()
-        self.assertTrue(image_obj>0)
+        self.user=Users(username="kk",profile_photo = 'xyz.png', email="triplek@gmail.com",bio="Am Happy", phone_number ='+254725801772',date_joined="2021-09-05 22:16:35.61389+03")
+        users_count = Users.objects.all().count()
+        self.assertTrue(users_count>0)
 
 
-    def test_update_caption(self):
-        image_obj = Posts.objects.first()
+    def test_update_user(self):
+        user = Users.objects.first()
         id=image_obj.id
         caption="This is lit"        
         Posts.update_caption(id,caption)

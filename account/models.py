@@ -35,7 +35,7 @@ class MyAccountManager(BaseUserManager):
         
 
 class Users(AbstractBaseUser):
-    username = models.CharField( max_length=20, unique=True)  
+    username = models.CharField( max_length=50, unique=True)  
     email = models.CharField( max_length=50, unique=True) 
     phone_number = models.CharField(max_length = 15,blank =True)
     profile_photo = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
@@ -81,10 +81,10 @@ class Users(AbstractBaseUser):
 
 
 class Projects(models.Model):
-    title = models.CharField(max_length =50)
+    title = models.CharField(max_length =100)
     image = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     description = models.TextField()
-    link = models.CharField(max_length =30)
+    link = models.CharField(max_length =100)
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     design=models.FloatField(default=0)
     usability=models.FloatField(default=0)
