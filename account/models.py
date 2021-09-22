@@ -62,6 +62,22 @@ class Users(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    def save_project(self):
+        self.save()
+    
+    @classmethod
+    def delete_user(cls,id):
+        delete_user = cls.objects.get(id=id)
+        delete_user.delete()
+        return delete_user
+    
+    @classmethod
+    def update_user(cls,id,profile_photo,bio, phone_number):
+        user=cls.objects.get(id=id)
+        user.profile_photo=profile_photo
+        user.bio=bio
+        user.phone_number=phone_number
+        return user.save()
 
 
 class Projects(models.Model):
@@ -74,3 +90,19 @@ class Projects(models.Model):
     usability=models.FloatField(default=0)
     content=models.FloatField(default=0)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
+
+    def save_project(self):
+        self.save()
+    
+    @classmethod
+    def delete_project(cls,id):
+        delete_project = cls.objects.get(id=id)
+        delete_project.delete()
+        return delete_project
+    
+    @classmethod
+    def update_project(cls,id,description,bio):
+        get_project=cls.objects.get(id=id)
+        get_project.description=description
+        get_project.bio=bio
+        return get_project.save()
