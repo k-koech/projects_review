@@ -3,7 +3,7 @@ import cloudinary
 import os
 import dj_database_url
 from decouple import config,Csv
-import django_on_heroku
+# import django_on_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
@@ -76,7 +76,7 @@ if os.environ.get('MODE')=="dev":
     DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'projectsjj_review',
+        'NAME': 'projects_review',
         'USER': 'postgres',
         'PASSWORD':'kkkk',
         'HOST': 'localhost',
@@ -144,4 +144,4 @@ cloudinary.config(
 )
 
 # Configure Django App for Heroku.
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
