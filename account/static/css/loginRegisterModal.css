@@ -15,7 +15,21 @@ a:hover
 }
 
 /* error alerts */
-#error, #success
+#errors
+{
+    display: none;
+}
+#successes
+{
+    display: none;
+}
+
+
+#error
+{
+    display: none;
+}
+#success
 {
     display: none;
 }

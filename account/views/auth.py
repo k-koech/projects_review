@@ -22,26 +22,31 @@ def register(request):
         password=request.POST.get('password')
         confirm_password=request.POST.get('confirm_password')
 
+        print(username)
+        print(email)
+        print(phone)
+        print(password+" pass")
+        print(confirm_password+" c-pass")
         username_exist=Users.objects.filter(username=username).count()
         email_exist=Users.objects.filter(email=email).count()
-        if username_exist<1:
-            if email_exist<1:
-                if password==confirm_password:
-                    user = Users(username=username, email=email,phone_number=phone, password=make_password(password))
-                    user.save()
 
-                    user = Users.objects.get(username=username)
-                    return JsonResponse({"msg":"Registered successfully", "success":"success"})
-                   
-                else:
-                    return JsonResponse({"msg":"Password doesn't match", "error":"password_match" })
-                
-            else:
-                    return JsonResponse({"msg":"Email exist", "error":"email"})
-                
+        if username_exist>0:
+            return JsonResponse({"msg":"Username exist.", "error":"username"})
+
+        elif email_exist>0:
+            return JsonResponse({"msg":"Email exist", "error":"email"})
         else:
-                return JsonResponse({"msg":"Username exist.", "error":"username"})
-              
+            if password!=confirm_password:
+                print(password+"xxx")
+                print(confirm_password)
+                return JsonResponse({"msg":"Password doesn't match", "error":"password_match" })
+            else:
+                user = Users(username=username, email=email,phone_number=phone, password=make_password(password))
+                user.save()
+
+                user = Users.objects.get(username=username)
+                return JsonResponse({"msg":"Registered successfully", "success":"success"})
+     
     else:
         pass
 

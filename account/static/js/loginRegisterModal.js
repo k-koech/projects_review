@@ -35,56 +35,61 @@ $(document).ready(function()
         url:'register',
     data:{
         username:$('#username').val(),
-        email:$('#email').val(),
+        email:$('#e-mail').val(),
         phone:$('#phone').val(),
-        password:$('#password').val(),
+        password:$('#pass').val(),
         confirm_password:$('#confirm_password').val(),
         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
         }, 
 
         beforeSend: function () 
         {
+                       
             $('#registerBtn').text('Saving ...')
            
         },
         success: function(response) 
         {
-                       
+            console.log(response)
             if(response.error=="username")
             {
-                $('#error').text(response.msg).fadeIn("fast")
+                $('#errors').text(response.msg).fadeIn("fast")
 
                 setTimeout(function() {
-                    $('#error').fadeOut("slow")
+                    $('#errors').fadeOut("slow")
                 }, 4000);   
             }   
 
             else if(response.error=="email")
             {
-                $('#error').text(response.msg).fadeIn("fast")
+                $('#errors').text(response.msg).fadeIn("fast")
                 setTimeout(function(){
-                    $('#error').fadeOut("slow")
+                    $('#errors').text(response.msg).fadeOut("slow")
                 }, 4000);   
             }
 
             else if(response.error=="password_match")
             {                
-                $('#error').text(response.msg).fadeIn("fast")
+                $('#errors').text(response.msg).fadeIn("fast")
                    setTimeout(function() {
-                    $('#error').fadeOut("fast")
+                    $('#errors').fadeOut("fast")
                     }, 4000);   
             }
             else if(response.success=="success")
             {
-                $('#success').text(response.msg).fadeIn("fast")
-                username:$('#username').val(''),
-                $('#email').val(''),
+                $('#errors').fadeOut("fast")
+                $('#successes').text(response.msg).fadeIn("fast")
+
+                $('#username').val(''),
+                $('#e-mail').val(''),
                 $('#phone').val(''),
-                $('#password').val(''),
+                $('#pass').val(''),
                 $('#confirm_password').val(''),
+
                     setTimeout(function() {
-                        $('#success').fadeOut("fast")
-                    }, 4000);      
+                        $('#successes').fadeOut("fast")
+                    }, 4000);    
+                        
             }
             $('#registerBtn').text('Register')
         },
@@ -168,5 +173,4 @@ $(document).ready(function()
     
     });
 });
-
 
