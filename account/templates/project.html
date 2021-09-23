@@ -30,16 +30,21 @@
               <a href="project-single.html">{{project.title}}</a>
             </h2>
 
-            <form method="POST" action="/project/delete/{{project.id}}">
-              {%csrf_token%}
-               <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-             </form>
+            
+               
 
             <div class="entry-meta">
               <ul>
                 <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href=""></a>{{project.user.username}}</a></li>
                 <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time datetime="2020-01-01"> {{ project.date_posted|date:"M d, Y" }}</time></a></li>
-                <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">12 Comments</a></li>
+                {% if request.user == project.user %}
+                <form method="POST" action="/project/delete/{{project.id}}">
+                  {%csrf_token%}
+                  <li class="d-flex align-items-center ml-3 text-danger"><i class="icofont-trash"></i> <a class="btn-sm text-danger"  type="submit" >Delete</a></li>
+                </form>
+                {% endif %}
+                <li class="d-flex align-items-center text-dark ml-3"><i class="fa fa-external-link" aria-hidden="true"></i>
+                  <a class="text-dark" href="{{ project.link }}">Go Live</a></li>
               </ul>
             </div>
 
@@ -137,27 +142,30 @@
            
             <!-- End rate form categories-->
 
-            <h3 class="sidebar-title">Votes</h3>
+            <h3 class="sidebar-title">Reviews</h3>
             <div class="sidebar-item recent-posts">
               <div class="post-item clearfix">
-                 Average : {{average}}
+                 Average :<span id="averageData" data="{{average}}" >{{average}}</span> 
                  <!-- AVERAGE CHART -->
                 <canvas id="myChart"></canvas>  
                     <script>
+                      var average = $('#averageData').attr('data');
+                      var remainder=10-average
+                      console.log("kip")
+                      console.log(average)
+                                        
                           window.onload=function(){
                           var data = {
                           labels: [
                             "Average",
-                            "",
+                            "kk"
                           ],
                           datasets: [
                             {
-                              data: [300, 50],
-                              backgroundColor: [
-                                "Green","Red"
-                              ],
+                              data: [average, remainder],
+                              backgroundColor: ["Green","#fff"],
                               hoverBackgroundColor: [
-                                "#FF6283","#36A2EB","#FFCC54"
+                                "#FF6283","#36A2EB"
                               ]
                             }]
                         };
@@ -168,7 +176,8 @@
                             responsive: true,
                             legend: {
                               display: false
-                            }
+                            },
+                            pieHole: 0.9,
                           }
                         });
                         Chart.pluginService.register({
@@ -177,11 +186,11 @@
                                 height = chart.chart.height,
                                 ctx = chart.chart.ctx;
                             ctx.restore();
-                            var fontSize = (height / 134).toFixed(2);
+                            var fontSize = (height / 194).toFixed(2);
                             ctx.font = fontSize + "em sans-serif";
                             ctx.textBaseline = "middle";
-                            var text = "Average",
-                                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            var text = "Average "+average,
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
                                 textY = height / 2;
                             ctx.fillText(text, textX, textY);
                             ctx.save();
