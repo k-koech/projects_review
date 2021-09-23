@@ -13,12 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m8*-m=zd6a+kph1g=ky-#)0ys0ejz(ivy(_ou&y+pt7%b7!!09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# os.environ['DEBUG']
-ALLOWED_HOSTS = ['*']
-# os.environ['ALLOWED_HOSTS']
+DEBUG = os.environ.get("DEBUG")
+
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+
 # auth model
 AUTH_USER_MODEL="account.users"
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -75,22 +76,20 @@ if os.environ.get('MODE')=="dev":
     DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'projects_review',
+        'NAME': 'projectsjj_review',
         'USER': 'postgres',
-        'PASSWORD': os.environ.get('PASSWORD') ,
+        'PASSWORD':'kkkk',
         'HOST': 'localhost',
-        'DISABLE_SERVER_SIDE_CURSORS': True,
-
     }
-    }
+     }
 
 # production
 else:
-   DATABASES = {
-       'default': dj_database_url.config(
-           default=os.environ.get('DATABASE_URL')
-       )
-   }
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
+    }
 
 
 # Password validation
