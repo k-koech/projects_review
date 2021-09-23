@@ -88,9 +88,6 @@ class Projects(models.Model):
     description = models.TextField()
     link = models.CharField(max_length =100)
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
-    design=models.FloatField(default=0)
-    usability=models.FloatField(default=0)
-    content=models.FloatField(default=0)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
 
     def save_project(self):
@@ -109,3 +106,11 @@ class Projects(models.Model):
         delete_project = cls.objects.get(id=id)
         delete_project.delete()
         return delete_project
+
+class Review(models.Model):
+    date_voted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
+    design=models.FloatField(default=0)
+    userbility=models.FloatField(default=0)
+    content=models.FloatField(default=0)
+    project=models.ForeignKey("Projects",on_delete=models.CASCADE)
+    user=models.ForeignKey("Users",on_delete=models.CASCADE)

@@ -6,10 +6,11 @@ from rest_framework import authentication
 import rest_framework
 from django.contrib.auth.decorators import login_required
 from rest_framework import permissions
-from ..models import Projects, Users
+from ..models import Projects, Review, Users
 from django.contrib.auth import authenticate,login as django_login,logout as django_logout,login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Avg
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -74,7 +75,6 @@ def add_project(request):
         user.save()
         messages.add_message(request, messages.SUCCESS, "Saved successfully!!")
         return redirect(add_project)
-
             
     else:
         return render(request, "add_project.html")
@@ -83,10 +83,12 @@ def add_project(request):
 def rate_project(request,id):
     if request.method=="POST":
         project = Projects.objects.get(id=id)
-        project.design=request.POST['design']
-        project.usability=request.POST['usability']
-        project.content=request.POST['content']
-        project.save()
+
+        design=request.POST['design']
+        userbility=request.POST['userbility']
+        content=request.POST['content']
+        review=Review(design=design, userbility=userbility, content=content, project=project, user=request.user)
+        review.save()
     return redirect(index)
 
 @login_required(login_url='/')   
@@ -98,13 +100,22 @@ def delete_project(request,id):
 @login_required(login_url='/')     
 def project(request, id):
     project = Projects.objects.get(id=id)
-    usability=project.usability
-    design=project.design
-    content=project.content
 
-    average= round((usability+design+content)/3, 1)
-    context = {"project":project,"usability":usability,"design":design, "content":content, "average":average}
-    return render(request, 'project.html', context)
+    # review = Review.objects.filter(project__id=id).aggregate(Avg('design')) 
+    # print(review)
+    # added_by__username
+    avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
+    avg_userbility= Review.objects.filter(project__id=project.id).aggregate(Avg('userbility'))
+    avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
+   
+    avg_content=round(avg_content["content__avg"], 1)
+    avg_design=round(avg_design["design__avg"], 1)
+    avg_userbility=round(avg_userbility["userbility__avg"], 1)
+
+    average= round((avg_content+avg_userbility+avg_design)/3, 1)
+
+    context = {"project":project,"userbility":avg_userbility,"design":avg_design, "content":avg_content, "average":average}
+    return render(request, 'project.html', context )
 
 
 @login_required(login_url='/')
