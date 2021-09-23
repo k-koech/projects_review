@@ -72,25 +72,25 @@ WSGI_APPLICATION = 'projects_review.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# if os.environ.get('MODE')=="dev":
-DATABASES = {
+if os.environ.get('MODE')=="dev":
+    DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'projects_review',
         'USER': 'postgres',
         'PASSWORD': os.environ['PASSWORD'],
         'HOST': 'localhost',
-         'PORT': '5432',
+        'PORT': '',
     }
      }
 
 # production
-# else:
-#     DATABASES = {
-#         'default': dj_database_url.config(
-#             default=os.environ.get('DATABASE_URL')
-#         )
-#     }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
+    }
 
 
 # Password validation
