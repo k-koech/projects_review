@@ -114,3 +114,20 @@ class Review(models.Model):
     content=models.FloatField(default=0)
     project=models.ForeignKey("Projects",on_delete=models.CASCADE)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
+
+    def save_review(self):
+        self.save()
+    
+    @classmethod
+    def update_review(cls,id,design,content,userbility):
+        get_review=cls.objects.get(id=id)
+        get_review.design=design
+        get_review.userbility=userbility
+        get_review.content=content
+        return get_review.save()
+    
+    @classmethod
+    def delete_review(cls,id):
+        delete_review = cls.objects.get(id=id)
+        delete_review.delete()
+        return delete_review
