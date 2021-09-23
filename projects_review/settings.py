@@ -13,8 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m8*-m=zd6a+kph1g=ky-#)0ys0ejz(ivy(_ou&y+pt7%b7!!09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
-ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS']
+DEBUG = True
+# os.environ['DEBUG']
+ALLOWED_HOSTS = ['*']
+# os.environ['ALLOWED_HOSTS']
 # auth model
 AUTH_USER_MODEL="account.users"
 # Application definition
