@@ -22,7 +22,6 @@ urlpatterns = [
     # API
     path('api/users/', MerchUsers.as_view()),
     path('api/projects/', MerchList.as_view()),
-    # path('api-token-auth/', obtain_auth_token),
     path('api/v1/auth/login/', LoginView.as_view()),
     path('api/v1/auth/logout/', LogoutView.as_view()),
 ]

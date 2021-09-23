@@ -99,23 +99,23 @@ def delete_project(request,id):
 
 @login_required(login_url='/')     
 def project(request, id):
-    project = Projects.objects.get(id=id)
+    if request.method=="POST":
+        pass
+    else:
+        project = Projects.objects.get(id=id)
 
-    # review = Review.objects.filter(project__id=id).aggregate(Avg('design')) 
-    # print(review)
-    # added_by__username
-    avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
-    avg_userbility= Review.objects.filter(project__id=project.id).aggregate(Avg('userbility'))
-    avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
-   
-    avg_content=round(avg_content["content__avg"], 1)
-    avg_design=round(avg_design["design__avg"], 1)
-    avg_userbility=round(avg_userbility["userbility__avg"], 1)
+        avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
+        avg_userbility= Review.objects.filter(project__id=project.id).aggregate(Avg('userbility'))
+        avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
+    
+        avg_content=round((avg_content["content__avg"]), 1)
+        avg_design=round(avg_design["design__avg"], 1)
+        avg_userbility=round(avg_userbility["userbility__avg"], 1)
+        print(avg_content)
+        average= round(int(avg_content+avg_userbility+avg_design)/3, 1)
 
-    average= round((avg_content+avg_userbility+avg_design)/3, 1)
-
-    context = {"project":project,"userbility":avg_userbility,"design":avg_design, "content":avg_content, "average":average}
-    return render(request, 'project.html', context )
+        context = {"project":project,"userbility":avg_userbility,"design":avg_design, "content":avg_content, "average":average}
+        return render(request, 'project.html', context )
 
 
 @login_required(login_url='/')
@@ -147,12 +147,10 @@ def profile_photo(request):
     """ UPDATE PROFILE PHOTO VIEW """     
     if request.method=="POST":
         user=Users.objects.get(id=request.user.id)
-        profile_img=request.FILES.get('file') 
+        profile_img=request.FILES['profile_photo']
 
         print(profile_img)
         user.profile_photo=profile_img
         user.save()      
-        return JsonResponse({"msg":"Saved successfully", "success":"success"})
-              
-    else:
-        pass
+    return redirect(profile)
+  

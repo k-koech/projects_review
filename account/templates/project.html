@@ -3,6 +3,9 @@
 
 {% block content %}
 
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script> 
+     
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/project.css' %}" >
 {% endblock %}
@@ -138,6 +141,58 @@
             <div class="sidebar-item recent-posts">
               <div class="post-item clearfix">
                  Average : {{average}}
+                 <!-- AVERAGE CHART -->
+                <canvas id="myChart"></canvas>  
+                    <script>
+                          window.onload=function(){
+                          var data = {
+                          labels: [
+                            "Average",
+                            "",
+                          ],
+                          datasets: [
+                            {
+                              data: [300, 50],
+                              backgroundColor: [
+                                "Green","Red"
+                              ],
+                              hoverBackgroundColor: [
+                                "#FF6283","#36A2EB","#FFCC54"
+                              ]
+                            }]
+                        };
+                        var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
+                          type: 'doughnut',
+                          data: data,
+                          options: {
+                            responsive: true,
+                            legend: {
+                              display: false
+                            }
+                          }
+                        });
+                        Chart.pluginService.register({
+                          beforeDraw: function(chart) {
+                            var width = chart.chart.width,
+                                height = chart.chart.height,
+                                ctx = chart.chart.ctx;
+                            ctx.restore();
+                            var fontSize = (height / 134).toFixed(2);
+                            ctx.font = fontSize + "em sans-serif";
+                            ctx.textBaseline = "middle";
+                            var text = "Average",
+                                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                                textY = height / 2;
+                            ctx.fillText(text, textX, textY);
+                            ctx.save();
+                          }
+                        });
+                            }
+
+                    </script>
+                </div>
+                <!-- end of average -->
+                 
               </div>
 
               <div class="post-item clearfix">
