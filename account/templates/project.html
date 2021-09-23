@@ -80,12 +80,15 @@
           <div class="sidebar">
             <h3 class="sidebar-title">Rate the project</h3>
 
-            <div class="sidebar-item mb-3 categories">
-              <form method="POST" action="/project/rate/{{project.id}}">
+            <div id="error" class="alert alert-danger "></div>
+            <div id="success" class="alert alert-success"></div>
+
+            <div id="sidebar" class="sidebar-item mb-3 categories">
+              <form method="POST" id="rateForm" actionData="{{project.id}}">
                 {%csrf_token%}
                 <div class="form-group">
                   <label>Design</label>
-                  <select name="design" required class="form-control">
+                  <select id="design" required class="form-control">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -102,7 +105,7 @@
 
                 <div class="form-group">
                 <label>Usability</label>
-                <select name="userbility" required class="form-control">
+                <select id="usability" required class="form-control">
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -119,7 +122,7 @@
 
                 <div class="form-group">
                 <label>Content</label>
-                <select name="content" required class="form-control">
+                <select id="content" required class="form-control">
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -134,7 +137,7 @@
                 </select>
                 </div>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-outline-success rounded-0 mt-03">Rate</button>
+                    <button type="submit" id="rateBtn" class="btn btn-outline-success rounded-0 mt-03 px-5">Rate</button>
                 </div>
               </form>
 
@@ -143,70 +146,19 @@
             <!-- End rate form categories-->
 
             <h3 class="sidebar-title">Reviews</h3>
-            <div class="sidebar-item recent-posts">
-              <div class="post-item clearfix">
+              <div class="sidebar-item recent-posts">
+                <div class="post-item clearfix">
                  Average :<span id="averageData" data="{{average}}" >{{average}}</span> 
                  <!-- AVERAGE CHART -->
-                <canvas id="myChart"></canvas>  
-                    <script>
-                      var average = $('#averageData').attr('data');
-                      var remainder=10-average
-                      console.log("kip")
-                      console.log(average)
-                                        
-                          window.onload=function(){
-                          var data = {
-                          labels: [
-                            "Average",
-                            "kk"
-                          ],
-                          datasets: [
-                            {
-                              data: [average, remainder],
-                              backgroundColor: ["Green","#fff"],
-                              hoverBackgroundColor: [
-                                "#FF6283","#36A2EB"
-                              ]
-                            }]
-                        };
-                        var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
-                          type: 'doughnut',
-                          data: data,
-                          options: {
-                            responsive: true,
-                            legend: {
-                              display: false
-                            },
-                            pieHole: 0.9,
-                          }
-                        });
-                        Chart.pluginService.register({
-                          beforeDraw: function(chart) {
-                            var width = chart.chart.width,
-                                height = chart.chart.height,
-                                ctx = chart.chart.ctx;
-                            ctx.restore();
-                            var fontSize = (height / 194).toFixed(2);
-                            ctx.font = fontSize + "em sans-serif";
-                            ctx.textBaseline = "middle";
-                            var text = "Average "+average,
-                            textX = Math.round((width - ctx.measureText(text).width) / 2),
-                                textY = height / 2;
-                            ctx.fillText(text, textX, textY);
-                            ctx.save();
-                          }
-                        });
-                            }
-
-                    </script>
+                <canvas id="myChart"></canvas>   
                 </div>
                 <!-- end of average -->
                  
               </div>
 
               <div class="post-item clearfix">
-                <h4>Userbility</h4>
-                <p>{{userbility}}</p>
+                <h4>Usability</h4>
+                <p>{{usability}}</p>
                 <h4>Content</h4>
                 <p>{{content}}</p>
                 <h4>Design</h4>

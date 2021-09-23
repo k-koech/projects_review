@@ -110,7 +110,7 @@ class Projects(models.Model):
 class Review(models.Model):
     date_voted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     design=models.FloatField(default=0)
-    userbility=models.FloatField(default=0)
+    usability=models.FloatField(default=0)
     content=models.FloatField(default=0)
     project=models.ForeignKey("Projects",on_delete=models.CASCADE)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
@@ -119,10 +119,10 @@ class Review(models.Model):
         self.save()
     
     @classmethod
-    def update_review(cls,id,design,content,userbility):
+    def update_review(cls,id,design,content,usability):
         get_review=cls.objects.get(id=id)
         get_review.design=design
-        get_review.userbility=userbility
+        get_review.usability=usability
         get_review.content=content
         return get_review.save()
     

@@ -45,6 +45,7 @@ $(document).ready(function()
         beforeSend: function () 
         {
             $('#registerBtn').text('Saving ...')
+           
         },
         success: function(response) 
         {

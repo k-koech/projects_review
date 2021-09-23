@@ -84,12 +84,12 @@ def rate_project(request,id):
     if request.method=="POST":
         project = Projects.objects.get(id=id)
 
-        design=request.POST['design']
-        userbility=request.POST['userbility']
-        content=request.POST['content']
-        review=Review(design=design, userbility=userbility, content=content, project=project, user=request.user)
+        design=request.POST.get('design')
+        usability=request.POST.get('usability')
+        content=request.POST.get('content')
+        review=Review(design=design, usability=usability, content=content, project=project, user=request.user)
         review.save()
-    return redirect(index)
+    return JsonResponse({"msg":"Rated successfuly.", "success":"success"})
 
 @login_required(login_url='/')   
 def delete_project(request,id):
@@ -99,23 +99,20 @@ def delete_project(request,id):
 
 @login_required(login_url='/')     
 def project(request, id):
-    if request.method=="POST":
-        pass
-    else:
-        project = Projects.objects.get(id=id)
+    project = Projects.objects.get(id=id)
 
-        avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
-        avg_userbility= Review.objects.filter(project__id=project.id).aggregate(Avg('userbility'))
-        avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
-    
-        avg_content=round((avg_content["content__avg"]), 1)
-        avg_design=round(avg_design["design__avg"], 1)
-        avg_userbility=round(avg_userbility["userbility__avg"], 1)
-        print(avg_content)
-        average= round(int(avg_content+avg_userbility+avg_design)/3, 1)
+    avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
+    avg_usability= Review.objects.filter(project__id=project.id).aggregate(Avg('usability'))
+    avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
 
-        context = {"project":project,"userbility":avg_userbility,"design":avg_design, "content":avg_content, "average":average}
-        return render(request, 'project.html', context )
+    avg_content=round((avg_content["content__avg"]), 1)
+    avg_design=round(avg_design["design__avg"], 1)
+    avg_usability=round(avg_usability["usability__avg"], 1)
+    print(avg_content)
+    average= round(int(avg_content+avg_usability+avg_design)/3, 1)
+
+    context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
+    return render(request, 'project.html', context )
 
 
 @login_required(login_url='/')

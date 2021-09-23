@@ -12,7 +12,7 @@ class ProjectsTestClass(TestCase):
         self.new_project.save()
 
         # Creating a new Review and saving it
-        self.new_review = Review(design=2,userbility=6,content=8,project=self.new_project,date_voted="2021-09-05 22:16:35.61389+03", user=self.user)
+        self.new_review = Review(design=2,usability=6,content=8,project=self.new_project,date_voted="2021-09-05 22:16:35.61389+03", user=self.user)
         self.new_review.save()
 
     def tearDown(self):
@@ -77,7 +77,7 @@ class ProjectsTestClass(TestCase):
 
     # TEST REVIEW
     def test_save_review(self):
-        review= Review(design=2,userbility=6,content=8,project=self.new_project,date_voted="2021-09-05 22:16:35.61389+03", user=self.user)
+        review= Review(design=2,usability=6,content=8,project=self.new_project,date_voted="2021-09-05 22:16:35.61389+03", user=self.user)
         review.save_review()
         review_obj = Review.objects.all().count()
         self.assertTrue(review_obj>1)
@@ -88,8 +88,8 @@ class ProjectsTestClass(TestCase):
         id=review_obj.id
         design=3
         content=6
-        userbility=10    
-        Review.update_review(id,design,content,userbility)
+        usability=10    
+        Review.update_review(id,design,content,usability)
         updated_review = Review.objects.get(id=id)
         self.assertEqual(updated_review.content,6.0)
 
