@@ -16,7 +16,7 @@
 
         <div class="section-title">
           <h2>New project</h2>
-          <p>Give your best shot</p>
+          <p>Give your best Project</p>
         </div>
 
         <div class="row">
@@ -72,9 +72,21 @@
                         <input type="link" name="link" class="form-control" required id="" >
                       </div>
                                           
-                      <div id="wrapper" style="margin-top: 20px;">
+                      <div id="wrapper" class="mb-4" style="margin-top: 20px;">
                         <input id="fileUpload" name="image" required type="file"/> 
                         <div id="image-holder" ></div>
+                      </div>
+
+                      <label>Languages Used</label> 
+                      <div class="tags">
+                        <div>
+                            <input required class="" name="language[]" type="text">      
+                            <span class="remove"><i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="add mt-2 btn btn-outline-secondary btn-sm">Add tag</span>
+                        </div>
                       </div>
                         
                       <button type="submit" class="btn btn-outline-success mt-2 px-5 float-right rounded-0">Submit</button>

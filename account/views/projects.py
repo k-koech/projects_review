@@ -70,9 +70,11 @@ def add_project(request):
         link=request.POST['link']
         description=request.POST['description']
         image=request.FILES['image']
-
-        user = Projects(title=title, description=description,link=link,image=image,user=request.user)
-        user.save()
+        languages=request.POST.getlist("language[]")
+        for i in languages:
+            print(i)
+        # user = Projects(title=title, description=description,link=link,image=image,user=request.user)
+        # user.save()
         messages.add_message(request, messages.SUCCESS, "Saved successfully!!")
         return redirect(add_project)
             
@@ -104,15 +106,21 @@ def project(request, id):
     avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
     avg_usability= Review.objects.filter(project__id=project.id).aggregate(Avg('usability'))
     avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
+    print("7777")
 
-    avg_content=round((avg_content["content__avg"]), 1)
-    avg_design=round(avg_design["design__avg"], 1)
-    avg_usability=round(avg_usability["usability__avg"], 1)
-    print(avg_content)
-    average= round(int(avg_content+avg_usability+avg_design)/3, 1)
+    if avg_content["content__avg"]==None or avg_design["design__avg"]==None or avg_usability["usability__avg"]==None:
+        print("No value")
+        return render(request, 'project.html', {'reviews':0,"project":project} )
 
-    context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
-    return render(request, 'project.html', context )
+    else:
+        avg_content=round((avg_content["content__avg"]), 1)
+        avg_design=round(avg_design["design__avg"], 1)
+        avg_usability=round(avg_usability["usability__avg"], 1)
+        
+        average= round(int(avg_content+avg_usability+avg_design)/3, 1)
+
+        context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
+        return render(request, 'project.html', context )
 
 
 @login_required(login_url='/')

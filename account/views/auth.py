@@ -60,14 +60,13 @@ def signIn(request):
         if user is not None:
             login(request,user )
             return JsonResponse({"msg":"Login succcess", "success":"success"})
-            # messages.add_message(request, messages.INFO, 'Successfully logged in!')
-            # return redirect(index)
  
         else:
             return JsonResponse({"msg":"Invalid Credentials", "error":"credentials"})
 
      else:
-        pass
+        return JsonResponse({"msg":"Invalid Credentials", "error":"credentials"})
+
 
 """ LOGOUT VIEW """
 def signOut(request):

@@ -31,3 +31,14 @@ $(document).ready(function() {
       }
     });
   });
+
+  // dynamic tags forms
+$(".add").click(function() 
+  {
+    $(".tags > div:first-child").clone(true).insertBefore(".tags > div:last-child");
+    return false;
+  });
+
+$(".remove").click(function() {
+    $(this).parent().remove();
+});

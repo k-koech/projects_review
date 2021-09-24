@@ -111,6 +111,7 @@ $(document).ready(function()
     $('#loginForm').on('submit', function(e)
     {
     e.preventDefault();
+
     $.ajax({
         method:'POST',
         url:'login',
@@ -126,7 +127,6 @@ $(document).ready(function()
         },
         success: function(response) 
         {
-                       
             if(response.error=="credentials")
             {
                 $('#error').text(response.msg).fadeIn("fast")

@@ -2,7 +2,7 @@ from django.db import models
 import datetime as dt
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from cloudinary.models import CloudinaryField
-
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class MyAccountManager(BaseUserManager):
@@ -35,8 +35,8 @@ class MyAccountManager(BaseUserManager):
         
 
 class Users(AbstractBaseUser):
-    username = models.CharField( max_length=50, unique=True)  
-    email = models.CharField( max_length=50, unique=True) 
+    username = models.CharField( max_length=80, unique=True)  
+    email = models.CharField( max_length=100, unique=True) 
     phone_number = models.CharField(max_length = 15,blank =True)
     profile_photo = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     bio= models.TextField(null=True)
@@ -83,10 +83,11 @@ class Users(AbstractBaseUser):
 
 
 class Projects(models.Model):
-    title = models.CharField(max_length =100)
+    title = models.CharField(max_length =200)
     image = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     description = models.TextField()
-    link = models.CharField(max_length =100)
+    link = models.CharField(max_length =200)
+    languagges = ArrayField(models.CharField(max_length=50, null=True),size=20 )
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
 
