@@ -4,12 +4,8 @@
 {% block content %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}" >
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}" >
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"> 
-  <!-- <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css"> --> 
 {% endblock %}
 
 
@@ -26,7 +22,12 @@
                         </div>
                         <div class="name">
                             <h3 class="title">{{user.username}}</h3>
-              <h6>Fullstack Developer</h6>
+                            <h6>{{ user.email }}</h6>
+                          {% if user.linkedin != none %}
+                            <h6>{{user.linkedin|lower}}</h6>
+                          {% endif %}
+
+                          
               <h6 class="font-weight-bold change-profile" data-toggle="modal" data-target="#addProfile">Update Profile Picture</h6>
               <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
                               <a href="#" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
@@ -36,7 +37,11 @@
                 </div>
               </div>
               <div class="description text-center">
-                  <p>{{user.bio}}</p>
+                {% if user.bio %}
+                <p>{{user.bio}}</p>
+                {% else %}
+                <p>NO BIO</p>
+                {% endif %}
               </div>
       <div class="row" id="apis">
         <div class="col-md-6 ml-auto mr-auto">
@@ -54,6 +59,12 @@
                                   API
                               </a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link projectsBtn" href="#api" role="tab" data-toggle="tab">
+                              <i class="fa fa-tachometer" aria-hidden="true"></i>
+                                Projects
+                            </a>
+                        </li>
                         </ul>
                       </div>
           </div>
@@ -91,7 +102,12 @@
               <div class="form-group">
                 <label class="label">Phone number</label>
                 <input required type="text" name="phone_number" class="form-control" value="{{ user.phone_number }}">
-              </div>         
+              </div>   
+              
+              <div class="form-group">
+                <label class="label">LinkedIn</label>
+                <input required type="text" name="linkedin" class="form-control" value="{{ user.linkedin }}">
+              </div>
              
               <div class="form-group">
                 <label class="label"></label>
@@ -118,6 +134,41 @@
             
             </div>
           </div>
+
+          <div class="tab-pane gallery" id="myProjects">
+            <div class="row text-center">
+            {% if projects %}
+              {% for project in projects %}
+          <div class="col-lg-4 col-md-6 portfolio-item mb-3">
+            <div class="portfolio-wrap " style="background-image: url({{project.image.url}}); background-position: center;
+            background-repeat: no-repeat;background-size: cover; ">
+              <img src="{{ project.image.url }}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <div class="portfolio-links">
+                  <a href="{{ project.image.url }}" data-gall="portfolioGallery" class="venobox" title="App 3"><i class="bx bx-plus"></i></a>
+                  <a class="h6" href="{{project.link}}">Live link<i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white pt-2 px-3 pb-2">
+              <h6 class="font-weight-bold"><a href="sites/{{project.id}}">{{ project.title }}</a></h6>
+              {{ project.date_posted|date:"M d, Y" }}
+              <hr>
+              <img src="{{ project.user.profile_photo.url }}" width="30" height="30" >
+              {{project.user.username}}
+            </div>
+          </div>
+         {% endfor %}
+         {% else %}
+         <div class="text-center" style="width: 100%;">
+         <div class="alert alert-info mx-auto text-center">
+           You have not uploaded any project!!
+         </div>
+         </div>
+         {% endif %}
+              </div>
+            </div>
+
       </div>
       </div>
       </div>

@@ -17,10 +17,11 @@
               <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Project Review</span></h2>
               <div class="animate__animated animate__fadeInUp">
                 <form action="/search" method="POST">
+                  {%csrf_token%}
                   <div class="form-group row " >
                     <div class="col-md-3"></div>
                     <div class="col-md-4 mb-3">
-                      <input type="text"class="form-control" name="search" placeholder="Search...">
+                      <input type="text"class="form-control" required name="search" placeholder="Search...">
                     </div>                  
                     <button class="mb-3 col-md-2 col-form-label btn btn-success">Search</label>
                       <div class="col-md-3">
@@ -60,7 +61,7 @@
 
         <div id="projects" class="row portfolio-container mt-4">
                     
-        <!-- filter app -->
+        <!-- fetch app -->
          {% for project in projects %}
           <div class="col-lg-4 col-md-6 portfolio-item mb-3">
             <div class="portfolio-wrap " style="background-image: url({{project.image.url}}); background-position: center;

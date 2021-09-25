@@ -9,9 +9,9 @@ $(document).ready(function(){
 
     $(".projectsBtn").click(function()
     {
-        $( "#updateProfile").fadeOut("fast");
+        $( "#myProjects").fadeIn("fast");
         $( "#api").fadeOut("fast");
-        $( "#myProjects").fadeIn( "fast" );
+        $( "#updateProfile").fadeOut( "fast" );
     });
 
     $(".apiBtn").click(function()

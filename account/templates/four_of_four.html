@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script> 
+     
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/project.css' %}" >
+{% endblock %}
+
+<main id="main">
+
+  <!-- ======= project Section ======= -->
+  <section id="project" class="project m-5">
+    <div class="container mt-4 text-center mt-5 mb-4">
+        <div class="alert alert-info">
+          NO RESULTS FOUND!!
+        </div>
+      <div class="row">
+
+       </div> 
+    </div>
+  </section><!-- End project Section -->
+
+</main><!-- End #main -->
+
+<script src="{% static 'js/project.js' %}"></script>
+{% endblock %}

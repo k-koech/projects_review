@@ -40,6 +40,7 @@ class Users(AbstractBaseUser):
     phone_number = models.CharField(max_length = 15,blank =True)
     profile_photo = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     bio= models.TextField(null=True)
+    linkedin= models.CharField(max_length=50, null=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(default=dt.datetime.now)
     is_admin = models.BooleanField(default=False)
@@ -87,7 +88,7 @@ class Projects(models.Model):
     image = CloudinaryField('image', default='image/upload/v1631717620/default_uomrne.jpg') 
     description = models.TextField()
     link = models.CharField(max_length =200)
-    languagges = ArrayField(models.CharField(max_length=50, null=True),size=20 )
+    languages = ArrayField(models.CharField(max_length=50,null=True, default=[]),size=20 )
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     user=models.ForeignKey("Users",on_delete=models.CASCADE)
 

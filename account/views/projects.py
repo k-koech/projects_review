@@ -4,6 +4,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework import authentication
 import rest_framework
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from rest_framework import permissions
 from ..models import Projects, Review, Users
@@ -73,8 +74,8 @@ def add_project(request):
         languages=request.POST.getlist("language[]")
         for i in languages:
             print(i)
-        # user = Projects(title=title, description=description,link=link,image=image,user=request.user)
-        # user.save()
+        user = Projects(title=title, description=description,link=link,languages=languages,image=image,user=request.user)
+        user.save()
         messages.add_message(request, messages.SUCCESS, "Saved successfully!!")
         return redirect(add_project)
             
@@ -106,7 +107,6 @@ def project(request, id):
     avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
     avg_usability= Review.objects.filter(project__id=project.id).aggregate(Avg('usability'))
     avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
-    print("7777")
 
     if avg_content["content__avg"]==None or avg_design["design__avg"]==None or avg_usability["usability__avg"]==None:
         print("No value")
@@ -122,6 +122,37 @@ def project(request, id):
         context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
         return render(request, 'project.html', context )
 
+login_required(login_url='/')     
+def search(request):
+    """SEARCH VIEW"""
+    title=request.POST.get('search')
+    # project = Projects.objects.get(title__contains=title)
+
+    try:
+        project = Projects.objects.get(title__contains=title)
+    except Projects.DoesNotExist:
+        return redirect(fouroffour_not_found)
+
+    project = Projects.objects.get(title__contains=title)
+
+    avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
+    avg_usability= Review.objects.filter(project__id=project.id).aggregate(Avg('usability'))
+    avg_content= Review.objects.filter(project__id=project.id).aggregate(Avg('content'))
+
+    if avg_content["content__avg"]==None or avg_design["design__avg"]==None or avg_usability["usability__avg"]==None:
+        print("No value")
+        return render(request, 'search.html', {'reviews':0,"project":project} )
+
+    else:
+        avg_content=round((avg_content["content__avg"]), 1)
+        avg_design=round(avg_design["design__avg"], 1)
+        avg_usability=round(avg_usability["usability__avg"], 1)
+        
+        average= round(int(avg_content+avg_usability+avg_design)/3, 1)
+
+        context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
+        return render(request, 'search.html', context )
+
 
 @login_required(login_url='/')
 def profile(request):
@@ -132,19 +163,24 @@ def profile(request):
         email=request.POST['email']
         username=request.POST['username']
         bio=request.POST['bio']
+        linkedin=request.POST['linkedin']
         phone_number=request.POST['phone_number']
       
         user.email=email
         user.bio=bio
         user.username=username
+        user.linkedin=linkedin
         user.phone_number=phone_number
         user.save()
 
         messages.add_message(request, messages.SUCCESS, "Profile saved successfully")
         return redirect(profile)
-
+# project__id=project.id
      else:
-        return render(request, "profile.html")
+        projects=Projects.objects.filter(user__id=request.user.id)
+        context={"projects":projects}
+        print(projects)
+        return render(request, "profile.html", context)
 
 
 @login_required(login_url='/')
@@ -159,3 +195,6 @@ def profile_photo(request):
         user.save()      
     return redirect(profile)
   
+
+def  fouroffour_not_found(request):
+    return render(request, "four_of_four.html")
