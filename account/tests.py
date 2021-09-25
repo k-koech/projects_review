@@ -8,7 +8,7 @@ class ProjectsTestClass(TestCase):
         self.user.save()
 
         # Creating a new Project and saving it
-        self.new_project = Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
+        self.new_project = Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",languages=["python","Bootstrap"],link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
         self.new_project.save()
 
         # Creating a new Review and saving it
@@ -49,7 +49,7 @@ class ProjectsTestClass(TestCase):
 
     # TEST PROJECT
     def test_save_project(self):
-        project=Projects(title="Instaclone app",image = 'xyz.png', description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
+        project=Projects(title="Instaclone app",image = 'xyz.png',languages=["python","Bootstrap"], description="The project is a a clone of instagram",link="https://github.com/k-koech/gallery_django",date_posted="2021-09-05 22:16:35.61389+03", user=self.user)
         project.save_project()
         project_obj = Projects.objects.all().count()
         self.assertTrue(project_obj>1)
