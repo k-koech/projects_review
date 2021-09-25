@@ -182,8 +182,8 @@ def profile(request):
         messages.add_message(request, messages.SUCCESS, "Profile saved successfully")
         return redirect(profile)
      else:
-        projects=Projects.objects.filter(user__id=3).order_by("-date_posted")
-        counter=Projects.objects.filter(user__id=3).count()
+        projects=Projects.objects.filter(user__id=request.user.id).order_by("-date_posted")
+        counter=Projects.objects.filter(user__id=request.user.id).count()
 
         context={"projects":projects,"counter":counter}
         print(projects)

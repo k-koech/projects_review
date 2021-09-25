@@ -398,3 +398,26 @@ footer p a:hover {
    cursor: pointer;
    color: rgb(255, 72, 0);
 }
+
+
+
+
+.portfolio-wrap {
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 27vh;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    background: rgba(85, 98, 112, 0.6);
+  }
+  
+ 
+  .portfolio-wrap img
+  {
+    /* height: 100%; */
+    width: auto;
+  }

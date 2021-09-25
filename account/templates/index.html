@@ -62,10 +62,10 @@
         <div id="projects" class="row portfolio-container mt-4">
                     
         <!-- fetch app -->
+        {% if projects %}
          {% for project in projects %}
-          <div class="col-lg-4 col-md-6 portfolio-item mb-3">
-            <div class="portfolio-wrap " style="background-image: url({{project.image.url}}); background-position: center;
-            background-repeat: no-repeat;background-size: cover; ">
+          <div class="col-lg-4 col-md-6 portfolio-item mb-5">
+            <div class="portfolio-wrap ">
               <img src="{{ project.image.url }}" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <div class="portfolio-links">
@@ -90,6 +90,11 @@
 
           </div>
          {% endfor %}
+         {% else %}
+         <div class="alert alert-info mx-auto">
+           There is no project at the moment!!
+         </div>
+         {% endif %}
          
         </div>
 

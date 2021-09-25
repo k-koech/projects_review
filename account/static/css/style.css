@@ -700,13 +700,15 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  min-height: 27vh;
   text-align: center;
   position: relative;
   overflow: hidden;
   z-index: 1;
   background: rgba(85, 98, 112, 0.6);
 }
+
+
 .portfolio .portfolio-wrap img
 {
   /* height: 100%; */
