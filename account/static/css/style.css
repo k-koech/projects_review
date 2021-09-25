@@ -10,7 +10,10 @@ body {
 a {
   color: #272727;
 }
-
+h6 a:hover
+{
+  color: #f34d4d;
+}
 a:hover {
   color: #e24d55;
   text-decoration: none;

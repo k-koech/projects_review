@@ -69,16 +69,21 @@
               <img src="{{ project.image.url }}" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <div class="portfolio-links">
-                  <a href="{{ project.image.url }}" data-gall="portfolioGallery" class="venobox" title="App 3"><i class="bx bx-plus"></i></a>
+                  <a href="{{ project.image.url }}" data-gall="portfolioGallery" class="venobox" title="{{project.title}}"><i class="bx bx-plus"></i></a>
                   <a class="h6" href="{{project.link}}">Live link<i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
-            <div class="bg-white pt-2 px-3 pb-2">
+            <div class="bg-white pt-2 px-3 pb-2 pt-3">
               <h6 class="font-weight-bold"><a href="sites/{{project.id}}">{{ project.title }}</a></h6>
               {{ project.date_posted|date:"M d, Y" }}
+              <div>
+              {% for language in project.languages %}
+                    <span class="badge badge-secondary">{{language}}</span>
+              {% endfor %}
+              </div>
               <hr>
-              <img src="{{ project.user.profile_photo.url }}" width="30" height="30" >
+              <img style="background-color:rgb(167, 253, 253);border-radius: 50%;" src="{{ project.user.profile_photo.url }}" width="30" height="30" >
               {{project.user.username}}
             </div>
            

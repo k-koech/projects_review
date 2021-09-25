@@ -84,8 +84,13 @@ def add_project(request):
 
 @login_required(login_url='/')   
 def rate_project(request,id):
+    """RATE PROJECT VIEW"""
     if request.method=="POST":
         project = Projects.objects.get(id=id)
+
+        rev = Review.objects.filter(project__id=id, user__id=request.user.id).count()
+        if rev>0:
+            return JsonResponse({"msg":"You have already rated!", "error":"error"})
 
         design=request.POST.get('design')
         usability=request.POST.get('usability')
@@ -103,6 +108,7 @@ def delete_project(request,id):
 @login_required(login_url='/')     
 def project(request, id):
     project = Projects.objects.get(id=id)
+    no_of_review = Review.objects.filter(project__id=id).count()
 
     avg_design= Review.objects.filter(project__id=project.id).aggregate(Avg('design'))
     avg_usability= Review.objects.filter(project__id=project.id).aggregate(Avg('usability'))
@@ -113,13 +119,13 @@ def project(request, id):
         return render(request, 'project.html', {'reviews':0,"project":project} )
 
     else:
-        avg_content=round((avg_content["content__avg"]), 1)
-        avg_design=round(avg_design["design__avg"], 1)
-        avg_usability=round(avg_usability["usability__avg"], 1)
+        avg_content=round((avg_content["content__avg"]), 2)
+        avg_design=round(avg_design["design__avg"], 2)
+        avg_usability=round(avg_usability["usability__avg"], 2)
         
-        average= round(int(avg_content+avg_usability+avg_design)/3, 1)
+        average= round((avg_content+avg_usability+avg_design)/3, 2)
 
-        context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average}
+        context = {"project":project,"usability":avg_usability,"design":avg_design, "content":avg_content, "average":average,"no_of_review":no_of_review}
         return render(request, 'project.html', context )
 
 login_required(login_url='/')     
@@ -175,11 +181,13 @@ def profile(request):
 
         messages.add_message(request, messages.SUCCESS, "Profile saved successfully")
         return redirect(profile)
-# project__id=project.id
      else:
-        projects=Projects.objects.filter(user__id=request.user.id)
-        context={"projects":projects}
+        projects=Projects.objects.filter(user__id=3).order_by("-date_posted")
+        counter=Projects.objects.filter(user__id=3).count()
+
+        context={"projects":projects,"counter":counter}
         print(projects)
+        print(request.user.id)
         return render(request, "profile.html", context)
 
 

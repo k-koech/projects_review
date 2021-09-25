@@ -33,25 +33,28 @@ $(document).ready(function()
         {
                        
             if(response.success=="success")
-            {
+            {   
                 swal({
                     title:"Saved",
                     icon:"success",
                     timer: 2000,
-                  });
-
-                setInterval('location.reload()', 2000); 
-
-                $('#success').text(response.msg).fadeIn("fast")
-                username:$('#username').val(''),
-                $('#email').val(''),
-                $('#phone').val(''),
-                $('#password').val(''),
-                
-                    setTimeout(function() {
-                        $('#success').fadeOut("fast")
-                    }, 4000);      
+                  });                     
             }
+            if(response.error=="error")
+            {
+                swal({
+                    title:"Error",
+                    text:"You have already rated this project!!",
+                    icon:"error",
+                    timer: 4000,
+                  });  
+            }
+            setInterval('location.reload()', 2000); 
+
+            $('#design').val(''),
+            $('#usability').val(''),
+            $('#content').val('')
+
             $('#rateBtn').text('Rate')
         },
 

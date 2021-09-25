@@ -136,10 +136,11 @@
           </div>
 
           <div class="tab-pane gallery" id="myProjects">
-            <div class="row text-center">
+            <h4 class="text-center font-weight-bold m-3">My Projects  <span class="badge badge-dark">{{counter}}</span></h4>
+            <div class="row px-auto">    
             {% if projects %}
               {% for project in projects %}
-          <div class="col-lg-4 col-md-6 portfolio-item mb-3">
+          <div class="col-lg-4 col-md-6 portfolio-item mb-3 mx-auto">
             <div class="portfolio-wrap " style="background-image: url({{project.image.url}}); background-position: center;
             background-repeat: no-repeat;background-size: cover; ">
               <img src="{{ project.image.url }}" class="img-fluid" alt="">
@@ -154,8 +155,7 @@
               <h6 class="font-weight-bold"><a href="sites/{{project.id}}">{{ project.title }}</a></h6>
               {{ project.date_posted|date:"M d, Y" }}
               <hr>
-              <img src="{{ project.user.profile_photo.url }}" width="30" height="30" >
-              {{project.user.username}}
+              
             </div>
           </div>
          {% endfor %}

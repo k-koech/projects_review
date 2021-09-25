@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 def index(request):
-    projects=Projects.objects.all()
+    projects=Projects.objects.all().order_by("-date_posted")
     context={"projects":projects}
     return render(request,'index.html', context)
 
