@@ -2,7 +2,7 @@
 #### The app is a project review, 21/09/2021
 #### **By Kelvin Kipchumba**
 ## Project Description
-    The application will allow a user to post a project he/she has created and get it reviewed by other users.
+    The application allows a user to post a project he/she has created and get it reviewed by other users.
 ## Setup/Installation Requirements
     - Download a file in the code section to the desired folder
     - Extract the files
