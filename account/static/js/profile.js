@@ -27,5 +27,8 @@ $(document).ready(function(){
 
 
 // API
-document.getElementById("usersApi").innerHTML=document.location.hostname+"/api/users/";
-document.getElementById("projectsApi").innerHTML=document.location.hostname+"/api/projects/";
+// document.getElementById("usersApi").innerHTML=document.location.hostname+"/api/users/";
+// document.getElementById("projectsApi").innerHTML=document.location.hostname+"/api/projects/";
+
+// document.getElementById( 'usersApiLink' ).href="https://"+window.location.hostname+"/api/users/";
+// document.getElementById( 'projectsApiLink' ).href="https://"+window.location.hostname+"/api/projects/";
