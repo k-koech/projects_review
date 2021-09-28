@@ -2,13 +2,9 @@ from account.views.auth import index
 from django.contrib.messages.api import add_message
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
-from rest_framework import authentication
-import rest_framework
-from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from rest_framework import permissions
 from ..models import Projects, Review, Users
-from django.contrib.auth import authenticate,login as django_login,logout as django_logout,login
+from django.contrib.auth import login as django_login,logout as django_logout,login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Avg
@@ -18,7 +14,6 @@ from rest_framework.views import APIView
 from ..serializer import LoginSerializer, MerchSerializer, MerchUser
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import GenericAPIView
 from rest_framework.authtoken.models import Token
 
@@ -82,7 +77,7 @@ def add_project(request):
     else:
         return render(request, "add_project.html")
 
-@login_required(login_url='/')   
+@login_required(login_url='/login')   
 def rate_project(request,id):
     """RATE PROJECT VIEW"""
     if request.method=="POST":
@@ -99,13 +94,13 @@ def rate_project(request,id):
         review.save()
     return JsonResponse({"msg":"Rated successfuly.", "success":"success"})
 
-@login_required(login_url='/')   
+@login_required(login_url='/login')   
 def delete_project(request,id):
     project=Projects.objects.get(id=id)
     project.delete()
     return redirect(index)
 
-@login_required(login_url='/')     
+@login_required(login_url='/login')     
 def project(request, id):
     project = Projects.objects.get(id=id)
     no_of_review = Review.objects.filter(project__id=id).count()

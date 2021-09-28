@@ -112,8 +112,12 @@
                   <input type="number" min=1 max=10 id="content" placeholder="Minimum of 1 and maximum of 10" required class="form-control">
                 </div>
                 <div class="text-right">
+                  {% if user.is_authenticated %}
                     <button type="submit" id="rateBtn" class="btn btn-outline-success rounded-0 mt-03 px-5">Rate</button>
-                </div>
+                  {% else %}
+                    Login to rate this project
+                  {% endif %}
+                  </div>
               </form>
 
             </div>
