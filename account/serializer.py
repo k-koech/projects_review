@@ -5,7 +5,7 @@ from .models import Projects, Users
 class MerchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
-        fields = ('title', 'description', 'image','link','date_posted','design','content','usability','user')
+        fields = ('title', 'description', 'image','link','date_posted','user')
 
 class MerchUser(serializers.ModelSerializer):
     class Meta:

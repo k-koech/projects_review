@@ -63,7 +63,8 @@ class Users(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    def save_project(self):
+
+    def save_user(self):
         self.save()
     
     @classmethod
