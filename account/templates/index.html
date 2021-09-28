@@ -22,8 +22,12 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-4 mb-3">
                       <input type="text"class="form-control" required name="search" placeholder="Search...">
-                    </div>                  
-                    <button class="mb-3 col-md-2 col-form-label btn btn-success">Search</label>
+                    </div>     
+                    {% if user.is_authenticated %}
+                      <button class="mb-3 col-md-2 col-form-label btn btn-success">Search</label>
+                    {% else %}
+                      <button disabled class="mb-3 col-md-2 col-form-label btn btn-success">Search</label>
+                    {% endif %}
                       <div class="col-md-3">
                   </div>
                 </form>
