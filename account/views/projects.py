@@ -77,7 +77,7 @@ def add_project(request):
     else:
         return render(request, "add_project.html")
 
-@login_required(login_url='/login')   
+@login_required(login_url='/')   
 def rate_project(request,id):
     """RATE PROJECT VIEW"""
     if request.method=="POST":
@@ -94,13 +94,13 @@ def rate_project(request,id):
         review.save()
     return JsonResponse({"msg":"Rated successfuly.", "success":"success"})
 
-@login_required(login_url='/login')   
+@login_required(login_url='/')   
 def delete_project(request,id):
     project=Projects.objects.get(id=id)
     project.delete()
     return redirect(index)
 
-@login_required(login_url='/login')     
+@login_required(login_url='/')     
 def project(request, id):
     project = Projects.objects.get(id=id)
     no_of_review = Review.objects.filter(project__id=id).count()
