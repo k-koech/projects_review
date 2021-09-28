@@ -8,7 +8,7 @@
     - Extract the files
     - Open the folder with vs code.
     - Activate the virtual environment in the terminal.
-    - Run "make server" in the terminal.
+    - Run ". .env" command and then run "make server" in the terminal.
     - Create database and add its URI in settings.py file.
     - Run migrations using 'python3 manage.py makemigrations' the migrate with 'python3 manage.py migrate'.
     - Open the server http://127.0.0.1:8000/ And you are all done.
