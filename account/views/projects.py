@@ -1,4 +1,8 @@
+import random
+import string
+from django.contrib.auth.hashers import make_password
 from account.views.auth import index
+from django.core.mail import send_mail
 from django.contrib.messages.api import add_message
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
@@ -201,3 +205,51 @@ def profile_photo(request):
 
 def  fouroffour_not_found(request):
     return render(request, "four_of_four.html")
+
+# 
+
+"""FORGOT PASSWORD"""
+def forgotpassword(request):
+    if request.method=="POST":
+        email= request.POST.get('email')
+        email_exist=Users.objects.filter(email=email).count()
+        
+        if email_exist<1:
+            return JsonResponse({"msg":"Email does not exist", "error":"email"})
+        elif email_exist==1:
+            user=Users.objects.get(email=email)
+            # generate password
+            letters = string.ascii_lowercase
+            new_password=''.join(random.choice(letters) for i in range(10))
+            user.password=make_password(new_password)
+            user.save()
+            send_mail(
+                'New Password',
+                'Your new password is '+new_password+". Ensure that you update your password after login.",
+                'Project Review ',
+                [email],
+                fail_silently=False,
+            )
+            return JsonResponse({"msg":"Password sent!", "success":"success"})
+
+        else:
+            return JsonResponse({"msg":"Password sent!", "error":"email"})
+
+    else:
+        return JsonResponse({"msg":"Password reset"})
+
+
+"""UPDATE PASSWORD"""
+def updatepassword(request):
+    password=request.POST.get('password')
+    confirm_password=request.POST.get('confirm_password')
+    if password!=confirm_password:
+        messages.add_message(request, messages.ERROR, "Password doesn't match!!")
+        return redirect(profile)
+       
+    else:
+        user=Users.objects.get(id=request.user.id)
+        user.password = password=make_password(password)
+        user.save()
+        messages.add_message(request, messages.SUCCESS, "Password updated successfully!!")
+        return redirect(profile)

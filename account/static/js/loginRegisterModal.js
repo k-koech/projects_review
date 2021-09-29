@@ -157,8 +157,7 @@ $(document).ready(function()
                 setTimeout(function() 
                 {
                     location.reload();
-                }, 4000); 
-                
+                }, 4000);   
             }
 
 
@@ -173,4 +172,66 @@ $(document).ready(function()
     
     });
 });
+
+// FORGOT PASSWORD
+$(document).ready(function()
+{
+    $('#sendPasswordForm').on('submit', function(e)
+    {
+    e.preventDefault();
+    e.stopPropagation();
+    $.ajax({
+        method:'POST',
+        url:'forgotpassword',
+    data:{
+        email:$('#emai').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        }, 
+
+        beforeSend: function () 
+        {
+            $('#forgotBtn').text('sending...')
+        },
+        success: function(response) 
+        {
+            if(response.error=="email")
+            {  
+                swal({
+                    title:"Error",
+                    text:"Email does not exist!!",
+                    icon:"error",
+                    timer: 4000,
+                  });  
+                 
+            }   
+            
+            else if(response.success=="success")
+            {        
+                    swal({
+                        icon: "success",
+                        title:"Password sent",
+                        text: "Check your email",
+                        timer: "3000"
+                      })  
+                      $('#emai').val('') 
+                    
+            }
+            else
+            {
+                alert("Error sending email!!")
+            }
+
+
+            $('#forgotBtn').text('Send new password')
+        },
+
+        error: function (error) {
+            alert('Error');
+        }
+
+    });
+    
+    });
+});
+
 

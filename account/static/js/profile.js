@@ -4,6 +4,7 @@ $(document).ready(function(){
         $( "#updateProfile").fadeIn( "fast" );
         $( "#api").fadeOut( "fast" );
         $( "#myProjects").fadeOut( "fast" );
+        $( "#updateProfile").fadeOut( "fast" );
         
     });
 
@@ -12,6 +13,7 @@ $(document).ready(function(){
         $( "#myProjects").fadeIn("fast");
         $( "#api").fadeOut("fast");
         $( "#updateProfile").fadeOut( "fast" );
+        $( "#updateProfile").fadeOut( "fast" );
     });
 
     $(".apiBtn").click(function()
@@ -19,6 +21,15 @@ $(document).ready(function(){
         $( "#updateProfile").fadeOut("fast");
         $( "#api").fadeIn("fast");
         $( "#myProjects").fadeOut( "fast" );
+        $( "#updateProfile").fadeOut( "fast" );
+    });
+
+    $(".passwordBtn").click(function()
+    {
+        $( "#updateProfile").fadeOut("fast");
+        $( "#api").fadeIn("fast");
+        $( "#myProjects").fadeOut( "fast" );
+        $( "#updateProfile").fadeOut( "fast" );
     });
 
 

@@ -2,7 +2,7 @@ from account.serializer import MerchUser
 from django.contrib import admin
 from django.urls import path
 from .views.auth import index, register,signIn, signOut
-from .views.projects import add_project, fouroffour_not_found,profile, profile_photo,project,rate_project,search,delete_project,MerchList, MerchUsers, LoginView, LogoutView
+from .views.projects import add_project, fouroffour_not_found,profile, profile_photo,project,rate_project,search,delete_project,forgotpassword,updatepassword,MerchList, MerchUsers, LoginView, LogoutView
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -10,6 +10,8 @@ urlpatterns = [
     path('register', register, name='register'),
     path('login', signIn, name='login'),
     path('signOut', signOut, name='signOut'),
+    path('forgotpassword', forgotpassword, name='forgotpassword'),
+    path('updatepassword', updatepassword, name='updatepassword'),
 
     path('profile', profile, name='profile'),
     path('profile_photo', profile_photo, name='profile_photo'),

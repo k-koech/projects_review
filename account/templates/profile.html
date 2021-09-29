@@ -48,11 +48,17 @@
                       <div class="profile-tabs">
                         <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
                           <li class="nav-item">
-                              <a class="nav-link active profileBtn" href="#updateProfile" role="tab" data-toggle="tab">
+                              <a class="nav-link active passwordBtn" href="#updateProfile" role="tab" data-toggle="tab">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Update profile
                               </a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link projectsBtn" href="#updatePassword" role="tab" data-toggle="tab">
+                              <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                                Update Password
+                            </a>
+                         </li>
                           <li class="nav-item">
                               <a class="nav-link apiBtn" href="#api" role="tab" data-toggle="tab">
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -119,6 +125,43 @@
           
         </div>
       </div>
+
+
+      <div class="tab-content tab-space">
+        <div class="tab-pane active gallery" id="updatePassword">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+          <h4 class="text-center font-weight-bold m-2 pt-5 ">Update Password</h4>
+          {% for message in messages %}
+            {% if message.tags == "error" %}
+              <div  class="alert alert-danger">{{ message }}</div>
+            {% else %}
+              <div  class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+          <form method="POST" action="updatepassword">
+            {% csrf_token %}
+            <div class="form-group">
+              <label class="label">Password</label>
+              <input required type="password" name="password" class="form-control" >
+            </div>
+
+            <div class="form-group">
+              <label class="label">Confirm password</label>
+              <input required type="password" name="confirm_password" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label class="label"></label>
+                  <button type="submit" class="btn btn-success px-5 rounded-0 float-right">Update password</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+
 
         <div class="tab-pane gallery" id="api">
           <div class="row">

@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 
-
 # Create your views here.
 def index(request):
     projects=Projects.objects.all().order_by("-date_posted")
@@ -22,11 +21,6 @@ def register(request):
         password=request.POST.get('password')
         confirm_password=request.POST.get('confirm_password')
 
-        print(username)
-        print(email)
-        print(phone)
-        print(password+" pass")
-        print(confirm_password+" c-pass")
         username_exist=Users.objects.filter(username=username).count()
         email_exist=Users.objects.filter(email=email).count()
 
@@ -37,8 +31,6 @@ def register(request):
             return JsonResponse({"msg":"Email exist", "error":"email"})
         else:
             if password!=confirm_password:
-                print(password+"xxx")
-                print(confirm_password)
                 return JsonResponse({"msg":"Password doesn't match", "error":"password_match" })
             else:
                 user = Users(username=username, email=email,phone_number=phone, password=make_password(password))
