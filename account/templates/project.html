@@ -42,7 +42,10 @@
                 {% if request.user == project.user %}
                 <form method="POST" action="/project/delete/{{project.id}}">
                   {%csrf_token%}
-                  <li class="d-flex align-items-center ml-3 text-danger"><i class="icofont-trash"></i> <a class="btn-sm text-danger"  type="submit" >Delete</a></li>
+                  <li class="d-flex align-items-center ml-3 text-danger">
+                    <i class="icofont-trash"></i> 
+                    <button class="border-0 btn-sm text-danger"  type="submit" >Delete</button>
+                  </li>
                 </form>
                 {% endif %}
                 <li class="d-flex align-items-center text-dark ml-3"><i class="fa fa-external-link" aria-hidden="true"></i>
